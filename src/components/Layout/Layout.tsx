@@ -78,10 +78,9 @@ export const Layout = ({ children, maxWidth, ...props }: any) => {
 
   function onSwitchClick() {
     ReactGA.event({
-      category: 'Sketch',
-      action: 'Toggle Sketch Mode',
+      category: 'Theme',
+      action: 'Clicked Toggle Sketch Mode',
     })
-
     setIsSketched(!isSketched)
   }
 

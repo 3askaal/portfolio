@@ -1,6 +1,7 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { Outline, Fill } from '..'
+import { fadeIn } from '../../style'
 
 export const ButtonStyles = ({
   theme,
@@ -50,7 +51,7 @@ export const ButtonStyles = ({
   }),
 
   ...(disabled && {
-    opacity: 0.25,
+    opacity: 0.4,
     pointerEvents: 'none',
   }),
 })
@@ -58,16 +59,26 @@ export const ButtonStyles = ({
 export const SButton = styled.button<any>(ButtonStyles)
 export const SButtonLink = styled.a<any>(ButtonStyles)
 
+export const SButtonContent = styled.div<any>(
+  {
+    display: 'inline-flex',
+  },
+  ({ theme }) =>
+    theme.isSketched &&
+    css`
+      opacity: 0;
+      animation: ${fadeIn} 0.5s ease-in-out 2s forwards;
+    `,
+)
+
 export const Button = ({ children, circle, href, disabled, ...props }: any) => {
   const ButtonComp: any = href ? SButtonLink : SButton
 
   return (
     <ButtonComp href={href} circle={circle} disabled={disabled} {...props}>
-      {!disabled && <Fill circle={circle} />}
-      {!disabled && (
-        <Outline radius={circle && 100} shouldAppearInRegularMode />
-      )}
-      {children}
+      <Fill circle={circle} />
+      <Outline radius={circle && 100} shouldAppearInRegularMode />
+      <SButtonContent>{children}</SButtonContent>
     </ButtonComp>
   )
 }

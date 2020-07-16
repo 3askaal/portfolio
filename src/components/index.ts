@@ -8,6 +8,7 @@ export * from './Link/Link'
 export * from './Social/Social'
 export * from './Space/Space'
 export * from './Switch/Switch'
+export * from './Body/Body'
 export * from './Text/Text'
 
 export * from './Sketch/Lines/Lines'

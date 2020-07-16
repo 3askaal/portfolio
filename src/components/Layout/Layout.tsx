@@ -19,16 +19,6 @@ export const SLayout = styled.div<any>(
   space,
 )
 
-// const fadeIn = keyframes`
-//   from { opacity: 0; }
-//   to { opacity: 1; }
-// `
-
-// ({ duration, delay }) => css`
-// animation: ${fadeIn} ${duration || '1s'} ease-out ${delay || '0.5s'}
-//   forwards;
-// `,
-
 export const SLayoutHoles = styled.div<any>(({ theme }) =>
   css({
     position: 'absolute',

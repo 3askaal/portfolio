@@ -18,6 +18,7 @@ import {
 } from '../../constants'
 import { calcCornerPieces, calcCornerWidth } from '../../helpers'
 import { MiscContext } from '../../context'
+import { fadeIn } from '../../style'
 
 const SDeviceWrapper = styled.div<any>(
   ({ theme }) =>
@@ -118,16 +119,24 @@ const SDeviceScreenContentNoise = styled.div<any>(
   `,
 )
 
-const SDeviceScreenButtons = styled.div<any>(({ theme }) => ({
-  position: 'relative',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-around',
-  padding: '0.5rem',
-  height: '2rem',
-  width: '100%',
-  zIndex: 1,
-}))
+const SDeviceScreenButtons = styled.div<any>(
+  ({ theme }) => ({
+    position: 'relative',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    padding: '0.5rem',
+    height: '2rem',
+    width: '100%',
+    zIndex: 1,
+  }),
+  ({ theme }) =>
+    theme.isSketched &&
+    css`
+      opacity: 0;
+      animation: ${fadeIn} 0.5s ease-in-out 2s forwards;
+    `,
+)
 
 const SDeviceScreenButton = styled.button<any>(({ disabled }) => ({
   ...(disabled && {

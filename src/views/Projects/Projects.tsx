@@ -8,7 +8,15 @@ import {
 } from 'react-feather'
 import ReactGA from 'react-ga'
 import { Row, Col, Title, Spacer, Box } from '3oilerplate'
-import { Layout, Text, Device, Space, Label, Button } from '../../components'
+import {
+  Layout,
+  Body,
+  Text,
+  Device,
+  Space,
+  Label,
+  Button,
+} from '../../components'
 import { PROJECTS } from '../../constants'
 
 export const ProjectsView = () => {
@@ -63,11 +71,11 @@ export const ProjectsView = () => {
         }}
       >
         <Col style={{ flexGrow: 0 }}>
-          <Text>
+          <Body>
             <p>
               <Link to="/">&#x3c; Back</Link>
             </p>
-          </Text>
+          </Body>
           <Space />
           <Device
             currentProjectIndex={currentProjectIndex}
@@ -89,9 +97,9 @@ export const ProjectsView = () => {
             >
               <PrevIcon />
             </Button>
-            <p>
+            <Text>
               {currentProjectIndex + 1} / {PROJECTS.length}
-            </p>
+            </Text>
             <Button
               onClick={onNext}
               square
@@ -102,7 +110,7 @@ export const ProjectsView = () => {
           </Spacer>
         </Col>
         <Col style={{ flexShrink: 1, paddingTop: ['0', '0', '4rem'] }}>
-          <Text>
+          <Body>
             <Box
               style={{
                 display: 'flex',
@@ -117,7 +125,7 @@ export const ProjectsView = () => {
               </Label>
             </Box>
             {PROJECTS[currentProjectIndex].description}
-          </Text>
+          </Body>
           <Space />
           {PROJECTS[currentProjectIndex].demo ? (
             <Box style={{ display: 'flex' }}>
@@ -128,16 +136,18 @@ export const ProjectsView = () => {
                 <Label circle>
                   <ExternalLinkIcon height={12} width={12} />
                 </Label>
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href={PROJECTS[currentProjectIndex].demo}
-                  onClick={() =>
-                    onDemoLinkClick(PROJECTS[currentProjectIndex].demo)
-                  }
-                >
-                  Go to demo
-                </a>
+                <Text>
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href={PROJECTS[currentProjectIndex].demo}
+                    onClick={() =>
+                      onDemoLinkClick(PROJECTS[currentProjectIndex].demo)
+                    }
+                  >
+                    Go to demo
+                  </a>
+                </Text>
               </Spacer>
             </Box>
           ) : null}
@@ -155,18 +165,20 @@ export const ProjectsView = () => {
                 <Label circle>
                   <CodeIcon height={12} width={12} />
                 </Label>
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href={PROJECTS[currentProjectIndex].repos.frontend}
-                  onClick={() =>
-                    onSourceCodeLinkClick(
-                      PROJECTS[currentProjectIndex].repos.frontend,
-                    )
-                  }
-                >
-                  Front-end
-                </a>
+                <Text>
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href={PROJECTS[currentProjectIndex].repos.frontend}
+                    onClick={() =>
+                      onSourceCodeLinkClick(
+                        PROJECTS[currentProjectIndex].repos.frontend,
+                      )
+                    }
+                  >
+                    Front-end
+                  </a>
+                </Text>
               </Spacer>
               <Spacer
                 size="xxs"
@@ -179,18 +191,20 @@ export const ProjectsView = () => {
                 <Label circle>
                   <CodeIcon height={12} width={12} />
                 </Label>
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href={PROJECTS[currentProjectIndex].repos.backend}
-                  onClick={() =>
-                    onSourceCodeLinkClick(
-                      PROJECTS[currentProjectIndex].repos.backend,
-                    )
-                  }
-                >
-                  Back-end
-                </a>
+                <Text>
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href={PROJECTS[currentProjectIndex].repos.backend}
+                    onClick={() =>
+                      onSourceCodeLinkClick(
+                        PROJECTS[currentProjectIndex].repos.backend,
+                      )
+                    }
+                  >
+                    Back-end
+                  </a>
+                </Text>
               </Spacer>
             </Box>
           ) : (
@@ -201,7 +215,9 @@ export const ProjectsView = () => {
               <Label circle>
                 <CodeIcon height={12} width={12} />
               </Label>
-              <p>Code is private</p>
+              <Text>
+                <p>Code is private</p>
+              </Text>
             </Spacer>
           )}
         </Col>

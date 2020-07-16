@@ -1,31 +1,14 @@
-import styled, { CSSObject } from 'styled-components'
+import styled, { css } from 'styled-components'
+import { fadeIn } from '../../style'
 
-export const Text = styled.div(
-  ({ theme }: any) =>
-    ({
-      display: 'block',
-      width: '100%',
-
-      ...(theme.isSketched && {
-        paddingTop: '0.35rem',
-        marginBottom: '0.65rem',
-      }),
-
-      ...(!theme.isSketched && {
-        paddingTop: '0.25rem',
-        marginBottom: '0.75rem',
-      }),
-
-      // '> *': {
-      //   marginTop: '1rem',
-      // },
-
-      p: {
-        lineHeight: '1rem',
-      },
-
-      '> * + *': {
-        marginTop: '1rem',
-      },
-    } as CSSObject),
+export const Text = styled.p<any>(
+  {
+    display: 'inline-block',
+  },
+  ({ theme }) =>
+    theme.isSketched &&
+    css`
+      opacity: 0;
+      animation: ${fadeIn} 0.5s ease-in-out 2s forwards;
+    `,
 )

@@ -1,4 +1,5 @@
 export * from './colors'
+export * from './keyframes'
 export * from './fonts'
 export * from './theme'
 export * from './global'

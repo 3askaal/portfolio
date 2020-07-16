@@ -26,6 +26,7 @@ export const Social = () => {
           key={keyGen()}
           circle
           href={url}
+          target="_blank"
           onClick={() => onLinkClick(name)}
         >
           {icon}

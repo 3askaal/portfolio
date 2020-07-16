@@ -10,8 +10,6 @@ const SAvatar = styled.div<any>(
     width: '5rem',
     height: '5rem',
     borderRadius: '100%',
-    cursor: 'none',
-    userSelect: 'none',
   }),
   width,
   height,

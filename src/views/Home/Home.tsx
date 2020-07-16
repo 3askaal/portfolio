@@ -9,10 +9,10 @@ export const HomeView = () => {
   }, [])
 
   return (
-    <Layout paddingTop="1rem">
+    <Layout paddingTop={['0rem', '0rem', '1rem']}>
       <Avatar />
+      <Space />
       <Text>
-        <Space />
         <p>Hello, I'm Bas.</p>
         <p>
           I'm a Full-stack developer living in Amsterdam, Netherlands.

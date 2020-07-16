@@ -1,33 +1,57 @@
-import React, { useState } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import {
   ArrowLeft as PrevIcon,
   ArrowRight as NextIcon,
   Code as CodeIcon,
   ExternalLink as ExternalLinkIcon,
 } from 'react-feather'
+import ReactGA from 'react-ga'
 import { Row, Col, Title, Spacer, Box } from '3oilerplate'
 import { Layout, Text, Device, Space, Label, Button } from '../../components'
 import { PROJECTS } from '../../constants'
 
 export const ProjectsView = () => {
-  const history: any = useHistory()
+  useEffect(() => {
+    ReactGA.pageview('/projects')
+  }, [])
+
   const [currentProjectIndex, setCurrentProjectIndex] = useState<number>(0)
 
   function onNext() {
     if (currentProjectIndex < PROJECTS.length - 1) {
       setCurrentProjectIndex(currentProjectIndex + 1)
+      ReactGA.event({
+        category: 'Projects',
+        action: 'Clicked Next Project',
+      })
     }
   }
 
   function onPrevious() {
     if (currentProjectIndex > 0) {
       setCurrentProjectIndex(currentProjectIndex - 1)
+      ReactGA.event({
+        category: 'Projects',
+        action: 'Clicked Previous Project',
+      })
     }
   }
 
-  function onExternalLink() {
-    window.open(PROJECTS[currentProjectIndex].demo, '_blank')
+  function onDemoLinkClick(url: string) {
+    ReactGA.event({
+      category: 'Projects',
+      action: 'Clicked Demo Link',
+      label: url,
+    })
+  }
+
+  function onSourceCodeLinkClick(url: string) {
+    ReactGA.event({
+      category: 'Projects',
+      action: 'Clicked Source Code Link',
+      label: url,
+    })
   }
 
   return (
@@ -48,9 +72,6 @@ export const ProjectsView = () => {
           <Device
             currentProjectIndex={currentProjectIndex}
             currentProject={PROJECTS[currentProjectIndex]}
-            onPrevious={() => history.goBack()}
-            onNext={() => history.goForward()}
-            onExternalLink={onExternalLink}
           />
           <Space blocks={2} />
           <Spacer
@@ -111,6 +132,9 @@ export const ProjectsView = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   href={PROJECTS[currentProjectIndex].demo}
+                  onClick={() =>
+                    onDemoLinkClick(PROJECTS[currentProjectIndex].demo)
+                  }
                 >
                   Go to demo
                 </a>
@@ -135,6 +159,11 @@ export const ProjectsView = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   href={PROJECTS[currentProjectIndex].repos.frontend}
+                  onClick={() =>
+                    onSourceCodeLinkClick(
+                      PROJECTS[currentProjectIndex].repos.frontend,
+                    )
+                  }
                 >
                   Front-end
                 </a>
@@ -154,6 +183,11 @@ export const ProjectsView = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   href={PROJECTS[currentProjectIndex].repos.backend}
+                  onClick={() =>
+                    onSourceCodeLinkClick(
+                      PROJECTS[currentProjectIndex].repos.backend,
+                    )
+                  }
                 >
                   Back-end
                 </a>

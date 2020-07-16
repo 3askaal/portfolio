@@ -1,8 +1,13 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import ReactGA from 'react-ga'
 import { Avatar, Layout, Text, Space, Button, Social } from '../../components'
 
 export const HomeView = () => {
+  useEffect(() => {
+    ReactGA.pageview('/')
+  }, [])
+
   return (
     <Layout paddingTop="1rem">
       <Avatar />

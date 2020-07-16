@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react'
 import styled from 'styled-components'
+import ReactGA from 'react-ga'
 import { debounce } from 'lodash'
 import { width, space } from 'styled-system'
 import { css } from '@styled-system/css'
@@ -75,6 +76,15 @@ export const Layout = ({ children, maxWidth, ...props }: any) => {
     setContainerWidth(getContainerWidth())
   }
 
+  function onSwitchClick() {
+    ReactGA.event({
+      category: 'Sketch',
+      action: 'Toggle Sketch Mode',
+    })
+
+    setIsSketched(!isSketched)
+  }
+
   useEffect(() => {
     window.addEventListener('resize', debounce(updateDimensions, 200))
 
@@ -88,7 +98,7 @@ export const Layout = ({ children, maxWidth, ...props }: any) => {
       <SLayoutHoles>
         <Holes />
       </SLayoutHoles>
-      <SLayoutSwitch onClick={() => setIsSketched(!isSketched)}>
+      <SLayoutSwitch onClick={onSwitchClick}>
         <Switch />
       </SLayoutSwitch>
       <SLayoutContent maxWidth={maxWidth}>{children}</SLayoutContent>

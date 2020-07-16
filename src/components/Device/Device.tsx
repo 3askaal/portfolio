@@ -2,6 +2,8 @@ import React, { useEffect, useState, useContext } from 'react'
 import styled, { CSSObject, css, keyframes } from 'styled-components'
 import { times } from 'lodash'
 import { Box, rgba } from '3oilerplate'
+import { useHistory } from 'react-router-dom'
+import ReactGA from 'react-ga'
 import {
   Circle as ExternalLinkIcon,
   ChevronLeft as PrevIcon,
@@ -9,6 +11,7 @@ import {
 } from 'react-feather'
 import { Fill, Outline } from '..'
 import {
+  PROJECTS,
   DEVICE_FACES,
   DEVICE_CORNERS,
   DEVICE_DIMENSIONS,
@@ -244,13 +247,8 @@ const SDeviceCornerPiece = styled.div<any>(
   }),
 )
 
-export const Device = ({
-  currentProject,
-  currentProjectIndex,
-  onPrevious,
-  onExternalLink,
-  onNext,
-}: any) => {
+export const Device = ({ currentProject, currentProjectIndex }: any) => {
+  const history: any = useHistory()
   const { isSketched }: any = useContext<any>(MiscContext)
   const [cornerPieces, setCornerPieces]: any = useState<any>([])
   const [deviceTransition, setDeviceTransition]: any = useState<any>({})
@@ -281,6 +279,30 @@ export const Device = ({
       transform: `rotateY(${currentProjectIndex * 360}deg)`,
       transitionDuration: '1s',
       transitionEasing: 'ease-in-out',
+    })
+  }
+
+  function onNext() {
+    history.goForward()
+    ReactGA.event({
+      category: 'Device',
+      action: 'Clicked Go Forward',
+    })
+  }
+
+  function onPrevious() {
+    history.goBack()
+    ReactGA.event({
+      category: 'Device',
+      action: 'Clicked Go Back',
+    })
+  }
+
+  function onExternalLink() {
+    window.open(PROJECTS[currentProjectIndex].demo, '_blank')
+    ReactGA.event({
+      category: 'Device',
+      action: 'Clicked Go To Demo',
     })
   }
 

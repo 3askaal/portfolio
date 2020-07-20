@@ -227,13 +227,13 @@ const SDeviceCorner = styled.div<any>(
     }),
 
     ...(type === 'bottomLeft' && {
-      bottom: `${radius}rem`,
+      bottom: `calc(${radius}rem + 2px)`,
       left: `${radius - width / 2}rem`,
     }),
 
     ...(type === 'bottomRight' && {
       bottom: `${radius}rem`,
-      right: `${radius + width / 2}rem`,
+      right: `calc(${radius + width / 2}rem + 2px)`,
     }),
 
     ...(theme.isSketched && {

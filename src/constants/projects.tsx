@@ -56,12 +56,8 @@ export const PROJECTS: any = [
           levels.
         </p>
         <p>
-          You can steal cars, rob other users or property, make/sell drugs,
-          gamble, assasinate other users, buy/sell anything on the dark web
-        </p>
-        <p>
           This game is inspired by games like Mafia Wars, I wanted to create a
-          modern location-based version.
+          modern and location-based version.
         </p>
       </>
     ),

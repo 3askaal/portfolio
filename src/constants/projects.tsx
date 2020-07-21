@@ -46,26 +46,4 @@ export const PROJECTS: any = [
       backend: 'https://github.com/3askaal/undercoverage-server',
     },
   },
-  {
-    title: 'ThugLive',
-    description: (
-      <>
-        <p>
-          Little non-visual strategy game where you play criminal online. The
-          goal is to get as much money possible and rank in different skill
-          levels.
-        </p>
-        <p>
-          This game is inspired by games like Mafia Wars, I wanted to create a
-          modern and location-based version.
-        </p>
-      </>
-    ),
-    demo: 'https://thuglive.netlify.app/',
-    private: true,
-    repos: {
-      frontend: 'https://github.com/3askaal/thuglive-client',
-      backend: 'https://github.com/3askaal/thuglive-server',
-    },
-  },
 ]

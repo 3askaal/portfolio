@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { startCase } from 'lodash'
 import {
   ArrowLeft as PrevIcon,
   ArrowRight as NextIcon,
@@ -154,58 +155,37 @@ export const ProjectsView = () => {
           <Space />
           {!PROJECTS[currentProjectIndex].private ? (
             <Box style={{ display: 'flex' }}>
-              <Spacer
-                size="xxs"
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  width: '5rem',
-                }}
-              >
-                <Label circle>
-                  <CodeIcon height={12} width={12} />
-                </Label>
-                <Text>
-                  <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href={PROJECTS[currentProjectIndex].repos.frontend}
-                    onClick={() =>
-                      onSourceCodeLinkClick(
-                        PROJECTS[currentProjectIndex].repos.frontend,
-                      )
-                    }
-                  >
-                    Front-end
-                  </a>
-                </Text>
-              </Spacer>
-              <Spacer
-                size="xxs"
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  width: '5rem',
-                }}
-              >
-                <Label circle>
-                  <CodeIcon height={12} width={12} />
-                </Label>
-                <Text>
-                  <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href={PROJECTS[currentProjectIndex].repos.backend}
-                    onClick={() =>
-                      onSourceCodeLinkClick(
-                        PROJECTS[currentProjectIndex].repos.backend,
-                      )
-                    }
-                  >
-                    Back-end
-                  </a>
-                </Text>
-              </Spacer>
+              {PROJECTS[currentProjectIndex].repos &&
+                Object.keys(PROJECTS[currentProjectIndex].repos).map(
+                  (key: string) => (
+                    <Spacer
+                      size="xxs"
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        width: '5rem',
+                      }}
+                    >
+                      <Label circle>
+                        <CodeIcon height={12} width={12} />
+                      </Label>
+                      <Text>
+                        <a
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          href={PROJECTS[currentProjectIndex].repos[key]}
+                          onClick={() =>
+                            onSourceCodeLinkClick(
+                              PROJECTS[currentProjectIndex].repos[key],
+                            )
+                          }
+                        >
+                          {startCase(key)}
+                        </a>
+                      </Text>
+                    </Spacer>
+                  ),
+                )}
             </Box>
           ) : (
             <Spacer

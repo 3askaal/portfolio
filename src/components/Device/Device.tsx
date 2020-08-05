@@ -103,7 +103,7 @@ const noise = keyframes`
 `
 
 const SDeviceScreenContentNoise = styled.div<any>(
-  () => ({
+  ({ visible }) => ({
     position: 'absolute',
     top: '-500px',
     right: '-500px',
@@ -113,6 +113,11 @@ const SDeviceScreenContentNoise = styled.div<any>(
       'transparent url(https://www.dropbox.com/s/h7ab1c82ctzy83n/noise.png?raw=1) 0 0',
     backgroundSize: '320px 320px',
     opacity: 0.35,
+    display: 'none',
+
+    ...(visible && {
+      display: 'block',
+    }),
   }),
   css`
     animation: ${noise} 1s steps(8, end) infinite both;
@@ -373,9 +378,10 @@ export const Device = ({ currentProject, currentProjectIndex }: any) => {
                         title={currentProject.name}
                         frameBorder="0"
                       />
-                    ) : (
-                      <SDeviceScreenContentNoise />
-                    )}
+                    ) : null}
+                    <SDeviceScreenContentNoise
+                      visible={currentProject.demoBroken}
+                    />
                   </SDeviceScreenContent>
                   <SDeviceScreenButtons>
                     <SDeviceScreenButton type="button" onClick={onPrevious}>
@@ -384,7 +390,7 @@ export const Device = ({ currentProject, currentProjectIndex }: any) => {
                     <SDeviceScreenButton type="button" onClick={onExternalLink}>
                       <ExternalLinkIcon width={16} />
                     </SDeviceScreenButton>
-                    <Box style={{ opacity: 0, pointerEvents: 'none' }}>
+                    <Box s={{ opacity: 0, pointerEvents: 'none' }}>
                       <SDeviceScreenButton type="button" onClick={onNext}>
                         <NextIcon width={20} />
                       </SDeviceScreenButton>

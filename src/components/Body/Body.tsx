@@ -10,6 +10,20 @@ export const Body = styled.div<any>(
       lineHeight: '1rem',
     },
 
+    a: {
+      ...(!theme.isSketched && {
+        color: theme.colors.primary,
+
+        '&:hover': {
+          color: theme.colors.primaryLight,
+        },
+      }),
+
+      ...(theme.isSketched && {
+        color: theme.colors.sketch.pen,
+      }),
+    },
+
     '> * + *': {
       marginTop: '1rem',
     },

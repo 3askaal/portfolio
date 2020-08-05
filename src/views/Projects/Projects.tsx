@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+
 import { startCase } from 'lodash'
 import {
   ArrowLeft as PrevIcon,
@@ -11,12 +11,13 @@ import ReactGA from 'react-ga'
 import { Row, Col, Title, Spacer, Box } from '3oilerplate'
 import {
   Layout,
-  Body,
   Text,
   Device,
   Space,
   Label,
   Button,
+  Link,
+  Body,
 } from '../../components'
 import { PROJECTS } from '../../constants'
 
@@ -66,16 +67,16 @@ export const ProjectsView = () => {
   return (
     <Layout maxWidth="31rem">
       <Row
-        style={{
+        s={{
           flexDirection: ['column', 'column', 'row'],
           flexWrap: 'nowrap',
         }}
       >
-        <Col style={{ flexGrow: 0 }}>
+        <Col s={{ flexShrink: 0, flexGrow: 1 }}>
           <Body>
-            <p>
-              <Link to="/">&#x3c; Back</Link>
-            </p>
+            <Text>
+              <Link href="/">&#x3c; Back</Link>
+            </Text>
           </Body>
           <Space />
           <Device
@@ -85,7 +86,7 @@ export const ProjectsView = () => {
           <Space blocks={2} />
           <Spacer
             size="s"
-            style={{
+            s={{
               flexDirection: 'row',
               alignItems: 'center',
               justifyContent: 'center',
@@ -110,10 +111,10 @@ export const ProjectsView = () => {
             </Button>
           </Spacer>
         </Col>
-        <Col style={{ flexShrink: 1, paddingTop: ['0', '0', '4rem'] }}>
+        <Col s={{ flexShrink: 1, paddingTop: ['0', '0', '4rem'] }}>
           <Body>
             <Box
-              style={{
+              s={{
                 display: 'flex',
                 justifyContent: 'space-between',
                 height: '2rem',
@@ -129,16 +130,16 @@ export const ProjectsView = () => {
           </Body>
           <Space />
           {PROJECTS[currentProjectIndex].demo ? (
-            <Box style={{ display: 'flex' }}>
+            <Box s={{ display: 'flex' }}>
               <Spacer
                 size="xxs"
-                style={{ flexDirection: 'row', alignItems: 'center' }}
+                s={{ flexDirection: 'row', alignItems: 'center' }}
               >
                 <Label circle>
                   <ExternalLinkIcon height={12} width={12} />
                 </Label>
                 <Text>
-                  <a
+                  <Link
                     target="_blank"
                     rel="noopener noreferrer"
                     href={PROJECTS[currentProjectIndex].demo}
@@ -147,20 +148,20 @@ export const ProjectsView = () => {
                     }
                   >
                     Go to demo
-                  </a>
+                  </Link>
                 </Text>
               </Spacer>
             </Box>
           ) : null}
           <Space />
           {!PROJECTS[currentProjectIndex].private ? (
-            <Box style={{ display: 'flex' }}>
+            <Box s={{ display: 'flex' }}>
               {PROJECTS[currentProjectIndex].repos &&
                 Object.keys(PROJECTS[currentProjectIndex].repos).map(
                   (key: string) => (
                     <Spacer
                       size="xxs"
-                      style={{
+                      s={{
                         flexDirection: 'row',
                         alignItems: 'center',
                         width: '5rem',
@@ -170,7 +171,7 @@ export const ProjectsView = () => {
                         <CodeIcon height={12} width={12} />
                       </Label>
                       <Text>
-                        <a
+                        <Link
                           target="_blank"
                           rel="noopener noreferrer"
                           href={PROJECTS[currentProjectIndex].repos[key]}
@@ -181,7 +182,7 @@ export const ProjectsView = () => {
                           }
                         >
                           {startCase(key)}
-                        </a>
+                        </Link>
                       </Text>
                     </Spacer>
                   ),
@@ -190,7 +191,7 @@ export const ProjectsView = () => {
           ) : (
             <Spacer
               size="xxs"
-              style={{ flexDirection: 'row', alignItems: 'center' }}
+              s={{ flexDirection: 'row', alignItems: 'center' }}
             >
               <Label circle>
                 <CodeIcon height={12} width={12} />

@@ -30,7 +30,6 @@ export const SLabel = styled.div<any>(
       borderRadius: '100%',
     }),
   }),
-
   space,
 )
 

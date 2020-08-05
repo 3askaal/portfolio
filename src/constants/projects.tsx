@@ -2,6 +2,37 @@ import React from 'react'
 
 export const PROJECTS: any = [
   {
+    title: '3oilerplate',
+    description: (
+      <>
+        <p>Extremely customizable Component Library and Toolkit for React.</p>
+        <p>
+          Combines the best of{' '}
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://styled-components.com/"
+          >
+            Styled Components
+          </a>{' '}
+          and{' '}
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://styled-system.com/"
+          >
+            Styled System
+          </a>
+          .
+        </p>
+      </>
+    ),
+    demo: 'https://3oilerplate.netlify.app/',
+    repos: {
+      code: 'https://github.com/3askaal/3oilerplate',
+    },
+  },
+  {
     title: 'SkateDice',
     description: (
       <>
@@ -55,38 +86,6 @@ export const PROJECTS: any = [
     repos: {
       frontend: 'https://github.com/3askaal/undercoverage-client',
       backend: 'https://github.com/3askaal/undercoverage-server',
-    },
-  },
-  {
-    title: '3oilerplate',
-    description: (
-      <>
-        <p>
-          Extremely customizable React Component Library and Toolkit. With a
-          wrapper around{' '}
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://styled-components.com/"
-          >
-            Styled Components
-          </a>{' '}
-          that brings{' '}
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://styled-system.com/"
-          >
-            Styled System
-          </a>
-          's theming magic into components.
-        </p>
-      </>
-    ),
-    demo: 'https://3oilerplate.netlify.app/',
-    demoBroken: true,
-    repos: {
-      code: 'https://github.com/3askaal/3oilerplate',
     },
   },
 ]

@@ -27,7 +27,7 @@ export const PROJECTS: any = [
         </p>
       </>
     ),
-    demo: 'https://3oilerplate.netlify.app/',
+    demo: 'https://3oilerplate.vercel.app/',
     repos: {
       code: 'https://github.com/3askaal/3oilerplate',
     },
@@ -62,7 +62,7 @@ export const PROJECTS: any = [
         </p>
       </>
     ),
-    demo: 'https://skate-or-dice.netlify.app/',
+    demo: 'https://skatedice.vercel.app/',
     repos: {
       frontend: 'https://github.com/3askaal/skatedice-client',
       backend: 'https://github.com/3askaal/skatedice-server',
@@ -80,7 +80,7 @@ export const PROJECTS: any = [
         </p>
       </>
     ),
-    demo: 'https://undercoverage.netlify.app/',
+    demo: 'https://undercoverage.vercel.app/',
     demoBroken: true,
     private: true,
     repos: {

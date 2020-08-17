@@ -9,7 +9,7 @@ export const HomeView = () => {
   }, [])
 
   return (
-    <Layout paddingTop={['0rem', '0rem', '1rem']}>
+    <Layout paddingTop={['0rem', '1rem', '3rem']}>
       <Avatar />
       <Space />
       <Body>

@@ -111,7 +111,10 @@ export const ProjectsView = () => {
             </Button>
           </Spacer>
         </Col>
-        <Col s={{ flexShrink: 1, paddingTop: ['0', '0', '4rem'] }}>
+        <Col
+          s={{ flexShrink: 1, paddingTop: ['0', '0', '4rem'] }}
+          data-projectid={currentProjectIndex}
+        >
           <Body>
             <Box
               s={{

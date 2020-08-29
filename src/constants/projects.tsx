@@ -5,8 +5,8 @@ export const PROJECTS: any = [
     title: '3oilerplate',
     description: (
       <>
-        <p>Extremely customizable Component Library and Toolkit for React.</p>
         <p>
+          Extremely customizable Component Library and Toolkit for React.
           Combines the best of{' '}
           <a
             target="_blank"

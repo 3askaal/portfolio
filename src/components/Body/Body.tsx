@@ -6,7 +6,7 @@ export const Body = styled.div<any>(
     display: 'block',
     width: '100%',
 
-    p: {
+    '> *': {
       lineHeight: '1rem',
     },
 

@@ -53,6 +53,10 @@ export const ButtonStyles = ({
   ...(disabled && {
     opacity: 0.4,
     pointerEvents: 'none',
+
+    '*': {
+      pointerEvents: 'none',
+    },
   }),
 })
 
@@ -77,7 +81,11 @@ export const Button = ({ children, circle, href, disabled, ...props }: any) => {
   return (
     <ButtonComp href={href} circle={circle} disabled={disabled} {...props}>
       <Fill circle={circle} />
-      <Outline radius={circle && 100} shouldAppearInRegularMode />
+      <Outline
+        radius={circle && 100}
+        disabled={disabled}
+        shouldAppearInRegularMode
+      />
       <SButtonContent>{children}</SButtonContent>
     </ButtonComp>
   )

@@ -81,11 +81,8 @@ export const PROJECTS: any = [
       </>
     ),
     demo: 'https://undercoverage.vercel.app/',
-    demoBroken: true,
-    private: true,
     repos: {
-      frontend: 'https://github.com/3askaal/undercoverage-client',
-      backend: 'https://github.com/3askaal/undercoverage-server',
+      code: 'https://github.com/3askaal/undercoverage',
     },
   },
 ]

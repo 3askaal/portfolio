@@ -22,6 +22,8 @@ import {
 import { PROJECTS } from '../../constants'
 
 export const ProjectsView = () => {
+  const [isNavigating, setIsNavigating]: any = useState<any>(false)
+
   useEffect(() => {
     ReactGA.pageview('/projects')
   }, [])
@@ -29,6 +31,9 @@ export const ProjectsView = () => {
   const [currentProjectIndex, setCurrentProjectIndex] = useState<number>(0)
 
   function onNext() {
+    setIsNavigating(true)
+    setTimeout(() => setIsNavigating(false), 1000)
+
     if (currentProjectIndex < PROJECTS.length - 1) {
       setCurrentProjectIndex(currentProjectIndex + 1)
       ReactGA.event({
@@ -39,6 +44,9 @@ export const ProjectsView = () => {
   }
 
   function onPrevious() {
+    setIsNavigating(true)
+    setTimeout(() => setIsNavigating(false), 1000)
+
     if (currentProjectIndex > 0) {
       setCurrentProjectIndex(currentProjectIndex - 1)
       ReactGA.event({
@@ -95,7 +103,7 @@ export const ProjectsView = () => {
             <Button
               onClick={onPrevious}
               square
-              disabled={currentProjectIndex === 0}
+              disabled={currentProjectIndex === 0 || isNavigating}
             >
               <PrevIcon />
             </Button>
@@ -105,7 +113,9 @@ export const ProjectsView = () => {
             <Button
               onClick={onNext}
               square
-              disabled={currentProjectIndex === PROJECTS.length - 1}
+              disabled={
+                currentProjectIndex === PROJECTS.length - 1 || isNavigating
+              }
             >
               <NextIcon />
             </Button>
@@ -113,21 +123,11 @@ export const ProjectsView = () => {
         </Col>
         <Col s={{ flexShrink: 1, paddingTop: ['0', '0', '4rem'] }}>
           <Body>
-            <Box
-              s={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                height: '2rem',
-                alignItems: 'flex-end',
-              }}
-            >
-              <Title level={4}>{PROJECTS[currentProjectIndex].title}</Title>
-              <Label marginBottom="8px" transform="translateY(-10px);">
-                Work in progress
-              </Label>
-            </Box>
+            <Title level={4}>{PROJECTS[currentProjectIndex].title}</Title>
             {PROJECTS[currentProjectIndex].description}
           </Body>
+          <Space />
+          <Label>Work in progress</Label>
           <Space />
           {PROJECTS[currentProjectIndex].demo ? (
             <Box s={{ display: 'flex' }}>

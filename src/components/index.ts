@@ -14,3 +14,6 @@ export * from './Text/Text'
 export * from './Sketch/Lines/Lines'
 export * from './Sketch/Fill/Fill'
 export * from './Sketch/Outline/Outline'
+
+export * from './Project/ProjectPreview/ProjectPreview'
+export * from './Project/ProjectDescription/ProjectDescription'

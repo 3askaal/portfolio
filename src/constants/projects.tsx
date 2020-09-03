@@ -3,6 +3,7 @@ import React from 'react'
 export const PROJECTS: any = [
   {
     title: '3oilerplate',
+    tag: '3oilerplate',
     description: (
       <>
         <p>
@@ -34,6 +35,7 @@ export const PROJECTS: any = [
   },
   {
     title: 'SkateDice',
+    tag: 'skatedice',
     description: (
       <>
         <p>
@@ -70,6 +72,7 @@ export const PROJECTS: any = [
   },
   {
     title: 'Undercoverage',
+    tag: 'undercoverage',
     description: (
       <>
         <p>

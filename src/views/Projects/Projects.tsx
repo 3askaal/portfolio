@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-
-import { startCase } from 'lodash'
+import { useHistory, useLocation } from 'react-router-dom'
+import { startCase, findIndex } from 'lodash'
 import {
   ArrowLeft as PrevIcon,
   ArrowRight as NextIcon,
@@ -22,6 +22,8 @@ import {
 import { PROJECTS } from '../../constants'
 
 export const ProjectsView = () => {
+  const history: any = useHistory()
+  const location: any = useLocation()
   const [isNavigating, setIsNavigating]: any = useState<any>(false)
 
   useEffect(() => {
@@ -29,6 +31,20 @@ export const ProjectsView = () => {
   }, [])
 
   const [currentProjectIndex, setCurrentProjectIndex] = useState<number>(0)
+
+  useEffect(() => {
+    history.push(`#${PROJECTS[currentProjectIndex].tag}`)
+  }, [currentProjectIndex])
+
+  useEffect(() => {
+    const locationProjectIndex = findIndex(PROJECTS, {
+      tag: location.hash.substring(1),
+    })
+
+    if (currentProjectIndex !== locationProjectIndex) {
+      setCurrentProjectIndex(locationProjectIndex)
+    }
+  }, [location])
 
   function onNext() {
     setIsNavigating(true)

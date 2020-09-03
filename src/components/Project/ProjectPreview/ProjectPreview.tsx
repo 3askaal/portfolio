@@ -45,10 +45,7 @@ export const ProjectPreview = ({
         </Text>
       </Body>
       <Space />
-      <Device
-        currentProjectIndex={currentProjectIndex}
-        currentProject={PROJECTS[currentProjectIndex]}
-      />
+      <Device currentProjectIndex={currentProjectIndex} />
       <Space blocks={2} />
       <Spacer
         size="s"

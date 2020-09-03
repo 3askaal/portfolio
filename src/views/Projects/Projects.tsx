@@ -7,30 +7,30 @@ import { Layout, ProjectPreview, ProjectDescription } from '../../components'
 import { PROJECTS } from '../../constants'
 
 export const ProjectsView = () => {
+  const [currentProjectIndex, setCurrentProjectIndexState] = useState<number>(0)
   const history: any = useHistory()
   const location: any = useLocation()
 
-  useEffect(() => {
-    ReactGA.pageview('/projects')
-  }, [])
-
-  const [currentProjectIndex, setCurrentProjectIndex] = useState<number>(0)
-
-  useEffect(() => {
-    if (currentProjectIndex !== undefined && PROJECTS[currentProjectIndex]) {
-      history.push(`#${PROJECTS[currentProjectIndex].tag}`)
-    }
-  }, [currentProjectIndex])
+  const setCurrentProjectIndex = (value: number) => {
+    setCurrentProjectIndexState(value)
+    history.push(`#${PROJECTS[value].tag}`)
+  }
 
   useEffect(() => {
     const locationProjectIndex = findIndex(PROJECTS, {
       tag: location.hash.substring(1),
     })
 
-    if (currentProjectIndex !== locationProjectIndex) {
-      setCurrentProjectIndex(locationProjectIndex)
-    }
-  }, [location])
+    setTimeout(() => {
+      if (locationProjectIndex !== -1) {
+        setCurrentProjectIndex(locationProjectIndex || currentProjectIndex)
+      }
+    }, 250)
+  }, [])
+
+  useEffect(() => {
+    ReactGA.pageview('/projects')
+  }, [])
 
   return (
     <Layout maxWidth="31rem">

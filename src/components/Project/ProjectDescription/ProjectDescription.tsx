@@ -69,6 +69,7 @@ export const ProjectDescription = ({ currentProjectIndex }: any) => {
                     alignItems: 'center',
                     width: '5rem',
                   }}
+                  key={key}
                 >
                   <Label circle>
                     <CodeIcon height={12} width={12} />

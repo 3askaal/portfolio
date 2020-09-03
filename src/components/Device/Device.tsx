@@ -261,7 +261,7 @@ const SDeviceCornerPiece = styled.div<any>(
   }),
 )
 
-export const Device = ({ currentProject, currentProjectIndex }: any) => {
+export const Device = ({ currentProjectIndex }: any) => {
   const history: any = useHistory()
   const { isSketched }: any = useContext<any>(MiscContext)
   const [cornerPieces, setCornerPieces]: any = useState<any>([])
@@ -347,7 +347,7 @@ export const Device = ({ currentProject, currentProjectIndex }: any) => {
     }
   }, [currentProjectIndex, isSketched])
 
-  return currentProject ? (
+  return (
     <SDeviceWrapper>
       <SDevice
         width={DEVICE_DIMENSIONS.width}
@@ -372,15 +372,15 @@ export const Device = ({ currentProject, currentProjectIndex }: any) => {
                   <SDeviceScreenContent>
                     <Outline />
                     <Fill />
-                    {!currentProject.demoBroken ? (
+                    {!PROJECTS[currentProjectIndex].demoBroken ? (
                       <iframe
-                        src={currentProject.demo}
-                        title={currentProject.name}
+                        src={PROJECTS[currentProjectIndex].demo}
+                        title={PROJECTS[currentProjectIndex].name}
                         frameBorder="0"
                       />
                     ) : null}
                     <SDeviceScreenContentNoise
-                      visible={currentProject.demoBroken}
+                      visible={PROJECTS[currentProjectIndex].demoBroken}
                     />
                   </SDeviceScreenContent>
                   <SDeviceScreenButtons>
@@ -424,5 +424,5 @@ export const Device = ({ currentProject, currentProjectIndex }: any) => {
         ))}
       </SDevice>
     </SDeviceWrapper>
-  ) : null
+  )
 }

@@ -121,7 +121,7 @@ export const ProjectsView = () => {
             </Button>
           </Spacer>
         </Col>
-        <Col s={{ flexShrink: 1, paddingTop: ['0', '0', '4rem'] }}>
+        <Col s={{ flexShrink: 1, paddingTop: ['2rem', null, '4rem'] }}>
           <Body>
             <Title level={4}>{PROJECTS[currentProjectIndex].title}</Title>
             {PROJECTS[currentProjectIndex].description}

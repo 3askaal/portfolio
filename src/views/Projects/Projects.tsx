@@ -17,7 +17,9 @@ export const ProjectsView = () => {
   const [currentProjectIndex, setCurrentProjectIndex] = useState<number>(0)
 
   useEffect(() => {
-    history.push(`#${PROJECTS[currentProjectIndex].tag}`)
+    if (currentProjectIndex !== undefined && PROJECTS[currentProjectIndex]) {
+      history.push(`#${PROJECTS[currentProjectIndex].tag}`)
+    }
   }, [currentProjectIndex])
 
   useEffect(() => {

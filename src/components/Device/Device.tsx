@@ -347,7 +347,7 @@ export const Device = ({ currentProject, currentProjectIndex }: any) => {
     }
   }, [currentProjectIndex, isSketched])
 
-  return (
+  return currentProject ? (
     <SDeviceWrapper>
       <SDevice
         width={DEVICE_DIMENSIONS.width}
@@ -424,5 +424,5 @@ export const Device = ({ currentProject, currentProjectIndex }: any) => {
         ))}
       </SDevice>
     </SDeviceWrapper>
-  )
+  ) : null
 }

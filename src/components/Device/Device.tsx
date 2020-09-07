@@ -276,7 +276,6 @@ export const Device = ({ currentProjectIndex }: any) => {
   }, [])
 
   const turnLeft = (): void => {
-    console.log('turnLeft', currentProjectIndex, currentProjectIndex * 360 - 15)
     setDeviceTransition({
       transform: `rotateY(${currentProjectIndex * 360 - 15}deg)`,
       transitionDuration: '4s',
@@ -285,11 +284,6 @@ export const Device = ({ currentProjectIndex }: any) => {
   }
 
   const turnRight = (): void => {
-    console.log(
-      'turnRight',
-      currentProjectIndex,
-      currentProjectIndex * 360 + 15,
-    )
     setDeviceTransition({
       transform: `rotateY(${currentProjectIndex * 360 + 15}deg)`,
       transitionDuration: '4s',
@@ -298,7 +292,6 @@ export const Device = ({ currentProjectIndex }: any) => {
   }
 
   const flip = (): void => {
-    console.log('flip', currentProjectIndex, currentProjectIndex * 360)
     setDeviceTransition({
       transform: `rotateY(${currentProjectIndex * 360}deg)`,
       transitionDuration: '1s',
@@ -388,6 +381,7 @@ export const Device = ({ currentProjectIndex }: any) => {
                     <Fill />
                     {!PROJECTS[currentProjectIndex].demoBroken ? (
                       <iframe
+                        key={PROJECTS[currentProjectIndex].name}
                         src={PROJECTS[currentProjectIndex].demo}
                         title={PROJECTS[currentProjectIndex].name}
                         frameBorder="0"

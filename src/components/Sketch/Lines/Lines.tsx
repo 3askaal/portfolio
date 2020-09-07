@@ -181,8 +181,10 @@ export const Lines = ({ duration = 1, delay = 0.5 }: any) => {
   }, [location])
 
   useEffect(() => {
-    setShouldAnimate(true)
-    setTimeout(() => setShouldAnimate(false), 3000)
+    if (isSketched) {
+      setShouldAnimate(true)
+      setTimeout(() => setShouldAnimate(false), 5000)
+    }
   }, [isSketched])
 
   return (

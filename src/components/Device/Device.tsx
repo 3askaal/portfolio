@@ -266,6 +266,9 @@ export const Device = ({ currentProjectIndex }: any) => {
   const { isSketched }: any = useContext<any>(MiscContext)
   const [cornerPieces, setCornerPieces]: any = useState<any>([])
   const [deviceTransition, setDeviceTransition]: any = useState<any>({})
+  const [deviceTransitionInterval, setDeviceTransitionInterval]: any = useState<
+    any
+  >(null)
   const cornerWidth = calcCornerWidth()
 
   useEffect(() => {
@@ -273,6 +276,7 @@ export const Device = ({ currentProjectIndex }: any) => {
   }, [])
 
   const turnLeft = (): void => {
+    console.log('turnLeft', currentProjectIndex, currentProjectIndex * 360 - 15)
     setDeviceTransition({
       transform: `rotateY(${currentProjectIndex * 360 - 15}deg)`,
       transitionDuration: '4s',
@@ -281,6 +285,11 @@ export const Device = ({ currentProjectIndex }: any) => {
   }
 
   const turnRight = (): void => {
+    console.log(
+      'turnRight',
+      currentProjectIndex,
+      currentProjectIndex * 360 + 15,
+    )
     setDeviceTransition({
       transform: `rotateY(${currentProjectIndex * 360 + 15}deg)`,
       transitionDuration: '4s',
@@ -289,6 +298,7 @@ export const Device = ({ currentProjectIndex }: any) => {
   }
 
   const flip = (): void => {
+    console.log('flip', currentProjectIndex, currentProjectIndex * 360)
     setDeviceTransition({
       transform: `rotateY(${currentProjectIndex * 360}deg)`,
       transitionDuration: '1s',
@@ -321,29 +331,33 @@ export const Device = ({ currentProjectIndex }: any) => {
   }
 
   useEffect(() => {
-    let deviceTransitionInterval: any
+    if (!isSketched && currentProjectIndex !== null) {
+      clearInterval(deviceTransitionInterval)
+      setDeviceTransitionInterval(null)
 
-    if (!isSketched) {
       flip()
 
       setTimeout(() => {
         turnRight()
         let turnedRight = true
 
-        deviceTransitionInterval = setInterval(() => {
-          if (turnedRight) {
-            turnedRight = false
-            turnLeft()
-          } else {
-            turnedRight = true
-            turnRight()
-          }
-        }, 4000)
-      }, 1000)
+        setDeviceTransitionInterval(
+          setInterval(() => {
+            if (turnedRight) {
+              turnedRight = false
+              turnLeft()
+            } else {
+              turnedRight = true
+              turnRight()
+            }
+          }, 4000),
+        )
+      }, 1100)
     }
 
     return () => {
       clearInterval(deviceTransitionInterval)
+      setDeviceTransitionInterval(null)
     }
   }, [currentProjectIndex, isSketched])
 

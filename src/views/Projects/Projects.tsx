@@ -7,7 +7,7 @@ import { Layout, ProjectPreview, ProjectDescription } from '../../components'
 import { PROJECTS } from '../../constants'
 
 export const ProjectsView = () => {
-  const [currentProjectIndex, setCurrentProjectIndexState] = useState<number>(0)
+  const [currentProjectIndex, setCurrentProjectIndexState] = useState<any>(null)
   const history: any = useHistory()
   const location: any = useLocation()
 
@@ -17,22 +17,27 @@ export const ProjectsView = () => {
   }
 
   useEffect(() => {
-    const locationProjectIndex = findIndex(PROJECTS, {
-      tag: location.hash.substring(1),
-    })
+    if (!location.hash) {
+      setCurrentProjectIndex(0)
+    } else {
+      const locationProjectIndex = findIndex(PROJECTS, {
+        tag: location.hash.substring(1),
+      })
 
-    setTimeout(() => {
-      if (locationProjectIndex !== -1) {
-        setCurrentProjectIndex(locationProjectIndex || currentProjectIndex)
+      if (
+        locationProjectIndex !== -1 &&
+        locationProjectIndex !== currentProjectIndex
+      ) {
+        setCurrentProjectIndex(locationProjectIndex)
       }
-    }, 250)
-  }, [])
+    }
+  }, [currentProjectIndex, location.hash])
 
   useEffect(() => {
     ReactGA.pageview('/projects')
   }, [])
 
-  return (
+  return currentProjectIndex !== null ? (
     <Layout maxWidth="31rem">
       <Row
         s={{
@@ -51,5 +56,5 @@ export const ProjectsView = () => {
         </Col>
       </Row>
     </Layout>
-  )
+  ) : null
 }

@@ -23,11 +23,7 @@ export const HomeView = () => {
           Tools I'm loving at the moment: NodeJS, Typescript, GraphQL, React,
           Vue, Apollo, Styled Components, lodash
         </p>
-        <p>
-          Currently not working for a company. Wanna talk about opportunities?
-        </p>
       </Body>
-      <Button href="mailto:3askaal@gmail.com">Shoot me an email</Button>
       <Space blocks={2} />
       <Social />
     </Layout>

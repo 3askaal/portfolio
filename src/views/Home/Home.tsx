@@ -24,7 +24,7 @@ export const HomeView = () => {
           Vue, Apollo, Styled Components, lodash
         </p>
       </Body>
-      <Space blocks={2} />
+      <Space />
       <Social />
     </Layout>
   )

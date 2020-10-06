@@ -17,7 +17,7 @@ export const HomeView = () => {
         <p>
           I'm a Full-stack developer living in Amsterdam, Netherlands.
           Specialized in Front-end but also likes doing Back-end and UX in{' '}
-          <Link to="/projects">side projects</Link>. Currently working for for{' '}
+          <Link to="/projects">side projects</Link>. Currently working for{' '}
           <a href="https://bloqhouse.com/" target="_blank" rel="noreferrer">
             Bloqhouse
           </a>

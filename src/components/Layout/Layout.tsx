@@ -1,26 +1,29 @@
 import React, { useEffect, useState, useContext } from 'react'
-import styled from 'styled-components'
+import { styled } from '3oilerplate'
 import ReactGA from 'react-ga'
 import { debounce } from 'lodash'
-import { width, space } from 'styled-system'
+import { width, height, space } from 'styled-system'
+import { ChevronLeft as ChevronLeftIcon, ChevronRight as ChevronRightIcon } from 'react-feather'
 import { css } from '@styled-system/css'
-import { getContainerWidth } from '../../helpers'
-import { Holes, Switch } from '..'
+import { getContainerHeight, getContainerWidth } from '../../helpers'
+import { Holes, Switch , Button } from '..'
 import { MiscContext } from '../../context'
 
-export const SLayout = styled.div<any>(
-  ({ theme, isSketched }) => ({
+
+export const SLayout = styled.div(
+  ({ theme, isSketched }: any) => ({
     position: 'relative',
     display: 'flex',
     justifyContent: 'center',
     zIndex: 1,
   }),
   width,
+  height,
   space,
 )
 
-export const SLayoutHoles = styled.div<any>(({ theme }) =>
-  css({
+export const SLayoutHoles = styled.div(({ theme }: any) =>
+  ({
     position: 'absolute',
     top: 0,
     left: 0,
@@ -38,7 +41,7 @@ export const SLayoutHoles = styled.div<any>(({ theme }) =>
   }),
 )
 
-export const SLayoutSwitch = styled.div<any>(({ theme }) => ({
+export const SLayoutSwitch = styled.div(({ theme }: any) => ({
   position: 'absolute',
   right: 0,
   top: 0,
@@ -47,8 +50,22 @@ export const SLayoutSwitch = styled.div<any>(({ theme }) => ({
   transition: theme.transition,
 }))
 
-export const SLayoutContent = styled.div<any>(({ maxWidth }) =>
-  css({
+export const SLayoutNav = styled.div(({ theme, position }: any) => ({
+  position: 'absolute',
+  display: 'flex',
+  alignItems: ['flex-end', null, 'center'],
+  [position]: 0,
+  top: 0,
+  bottom: 0,
+  marginRight: '1rem',
+  zIndex: 1,
+  transition: theme.transition,
+  paddingBottom: '1rem',
+  border: '1px solid red'
+}))
+
+export const SLayoutContent = styled.div(({ maxWidth }: any) =>
+  ({
     position: 'relative',
     width: '100%',
     maxWidth: maxWidth || '23rem',
@@ -58,12 +75,14 @@ export const SLayoutContent = styled.div<any>(({ maxWidth }) =>
   }),
 )
 
-export const Layout = ({ children, maxWidth, ...props }: any) => {
+export const Layout = ({ children, maxWidth, button, ...props }: any) => {
   const { isSketched, setIsSketched }: any = useContext(MiscContext)
   const [containerWidth, setContainerWidth] = useState(getContainerWidth())
+  const [containerHeight, setContainerHeight] = useState(getContainerHeight())
 
   function updateDimensions() {
     setContainerWidth(getContainerWidth())
+    setContainerHeight(getContainerHeight())
   }
 
   function onSwitchClick() {
@@ -75,6 +94,7 @@ export const Layout = ({ children, maxWidth, ...props }: any) => {
   }
 
   useEffect(() => {
+    updateDimensions()
     window.addEventListener('resize', debounce(updateDimensions, 200))
 
     return () => {
@@ -83,10 +103,16 @@ export const Layout = ({ children, maxWidth, ...props }: any) => {
   }, [])
 
   return (
-    <SLayout width={containerWidth} {...props}>
+    <SLayout s={{width: containerWidth, height: containerHeight}} {...props}>
       <SLayoutHoles>
         <Holes />
       </SLayoutHoles>
+      <SLayoutNav position={button}>
+        <Button square>
+          { button === 'left' && <ChevronLeftIcon /> }
+          { button === 'right' && <ChevronRightIcon /> }
+        </Button>
+      </SLayoutNav>
       <SLayoutSwitch onClick={onSwitchClick}>
         <Switch />
       </SLayoutSwitch>

@@ -75,7 +75,7 @@ export const SButtonContent = styled.div<any>(
     `,
 )
 
-export const Button = ({ children, circle, href, disabled, ...props }: any) => {
+export const Button = ({ children, circle, block, href, disabled, ...props }: any) => {
   const ButtonComp: any = href ? SButtonLink : SButton
 
   return (

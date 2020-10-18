@@ -1,15 +1,16 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import ReactGA from 'react-ga'
-import { Avatar, Layout, Body, Space, Button, Social } from '../../components'
+import { Avatar, Layout, Body, Space, Social } from '../../components'
 
 export const HomeView = () => {
   useEffect(() => {
     ReactGA.pageview('/')
   }, [])
 
+
   return (
-    <Layout paddingTop={['0rem', '1rem', '2rem']} button="right">
+    <Layout paddingTop={['0rem', '1rem', '2rem']} button="right" pageIndex={0}>
       <Avatar />
       <Space />
       <Body>
@@ -17,7 +18,7 @@ export const HomeView = () => {
         <p>
           I'm a Full-stack developer living in Amsterdam, Netherlands.
           Specialized in Front-end but also likes doing Back-end and UX in{' '}
-          <Link to="/projects">side projects</Link>. Currently working for{' '}
+          side projects. Currently working for{' '}
           <a href="https://bloqhouse.com/" target="_blank" rel="noreferrer">
             Bloqhouse
           </a>

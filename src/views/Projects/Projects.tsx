@@ -38,7 +38,7 @@ export const ProjectsView = () => {
   }, [])
 
   return currentProjectIndex !== null ? (
-    <Layout maxWidth="31rem" button="left">
+    <Layout maxWidth="31rem" button="left" pageIndex={1}>
       <Row
         s={{
           flexDirection: ['column', 'column', 'row'],

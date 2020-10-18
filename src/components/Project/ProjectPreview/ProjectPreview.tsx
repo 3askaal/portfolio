@@ -39,12 +39,7 @@ export const ProjectPreview = ({
 
   return (
     <>
-      <Body>
-        <Text>
-          <Link href="/">&#x3c; Back</Link>
-        </Text>
-      </Body>
-      <Space />
+      <Space blocks={3} />
       <Device currentProjectIndex={currentProjectIndex} />
       <Space blocks={2} />
       <Spacer

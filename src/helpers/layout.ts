@@ -6,8 +6,8 @@ export function getContainerWidth() {
     10,
   )
 
-  const screenWidth = document.body.scrollWidth
-  const sparePixelsInWidth = screenWidth % (blockSize * 2)
+  const screenWidth = window.innerWidth
+  const sparePixelsInWidth = (screenWidth + (2 * blockSize)) % (blockSize * 2)
   let containerWidth = screenWidth - sparePixelsInWidth
 
   if (sparePixelsInWidth < blockSize * 1.5) {
@@ -15,6 +15,8 @@ export function getContainerWidth() {
   } else {
     containerWidth += blockSize
   }
+
+  console.log(containerWidth)
 
   return containerWidth
 }
@@ -27,7 +29,7 @@ export function getContainerHeight() {
     10,
   )
 
-  const screenHeight = document.body.scrollHeight
+  const screenHeight = window.innerHeight
   const sparePixelsInHeight = screenHeight % (blockSize * 2)
   let containerHeight = screenHeight - sparePixelsInHeight
 

@@ -3,6 +3,7 @@ import { times, debounce } from 'lodash'
 import { useLocation } from 'react-router-dom'
 import { rgba } from '3oilerplate'
 import styled, { keyframes, css } from 'styled-components'
+import { motion } from 'framer-motion'
 import { getContainerWidth } from '../../../helpers'
 import { MiscContext } from '../../../context'
 
@@ -28,8 +29,8 @@ const SLines = styled.svg<any>(({ isVertical }) => ({
   bottom: 0,
 
   ...(isVertical && {
-    marginLeft: 'auto',
-    marginRight: 'auto',
+    // marginLeft: '0.5rem',
+    // marginRight: 'auto',
   }),
 }))
 
@@ -148,16 +149,17 @@ const SLinesLine = styled.line<any>(
   },
 )
 
-export const Lines = ({ duration = 1, delay = 0.5 }: any) => {
+export const Lines = ({ duration = 1, delay = 0.5, amountPages }: any) => {
   const location: any = useLocation()
   const { isSketched } = useContext<any>(MiscContext)
   const [values, setValues] = useState<any>({})
   const [shouldAnimate, setShouldAnimate] = useState<any>(false)
+  const { currentPageIndex }: any = useContext<any>(MiscContext)
 
   function updateValues() {
     const newValues = {
-      maxWidth: Math.round(document.body.getBoundingClientRect().width),
-      maxHeight: Math.round(document.body.getBoundingClientRect().height),
+      maxWidth: Math.round(document.body.clientWidth * amountPages),
+      maxHeight: Math.round(document.body.clientHeight),
       blockSize: parseInt(
         window
           .getComputedStyle(document.documentElement)
@@ -178,7 +180,7 @@ export const Lines = ({ duration = 1, delay = 0.5 }: any) => {
     return () => {
       window.removeEventListener('resize', debounce(updateValues, 50))
     }
-  }, [location])
+  }, [currentPageIndex])
 
   useEffect(() => {
     if (isSketched) {
@@ -187,58 +189,62 @@ export const Lines = ({ duration = 1, delay = 0.5 }: any) => {
     }
   }, [isSketched])
 
+  useEffect(() => {
+
+  }, [currentPageIndex])
+
   return (
     <SLinesWrapper>
       <SLines
         width={values.maxWidth}
         height={values.maxHeight}
         viewBox={`0 0 ${values.maxWidth || 0} ${values.maxHeight || 0}`}
-      >
+        >
         {times(
           Math.floor(values.maxHeight / values.blockSize) + 2,
           (index: number) => (
             <SLinesLine
-              key={`horizontal${index - 1}`}
-              x1={values.maxWidth}
-              y1={(index - 1) * values.blockSize}
-              y2={(index - 1) * values.blockSize}
-              strokeDasharray={values.maxWidth}
-              strokeDashoffset={values.maxWidth}
-              duration={duration}
-              delay={delay}
-              isHorizontal
-              isEven={index % 2 === 0}
-              isOdd={index % 2 !== 0}
-              shouldAnimate={shouldAnimate}
+            key={`horizontal${index - 1}`}
+            x1={values.maxWidth}
+            y1={(index - 1) * values.blockSize}
+            y2={(index - 1) * values.blockSize}
+            strokeDasharray={values.maxWidth}
+            strokeDashoffset={values.maxWidth}
+            duration={duration}
+            delay={delay}
+            isHorizontal
+            isEven={index % 2 === 0}
+            isOdd={index % 2 !== 0}
+            shouldAnimate={shouldAnimate}
             />
-          ),
-        )}
+            ),
+            )}
       </SLines>
       <SLines
         width={values.containerWidth}
         height={values.maxHeight}
         viewBox={`0 0 ${values.containerWidth || 0} ${values.maxHeight || 0}`}
         isVertical
-      >
+        >
         {times(
           Math.floor(values.maxWidth / values.blockSize) + 1,
           (index: number) => (
             <SLinesLine
-              key={`vertical${index}`}
-              y1={values.maxHeight}
-              x1={index * values.blockSize}
-              x2={index * values.blockSize}
-              strokeDasharray={values.maxHeight}
-              strokeDashoffset={values.maxHeight}
-              duration={duration}
-              delay={delay}
-              isVertical
-              isEven={index % 2 === 0}
-              isOdd={index % 2 !== 0}
-              shouldAnimate={shouldAnimate}
+            key={`vertical${index}`}
+            y1={values.maxHeight}
+            x1={index * values.blockSize}
+            x2={index * values.blockSize}
+            strokeDasharray={values.maxHeight}
+            strokeDashoffset={values.maxHeight}
+            duration={duration}
+            delay={delay}
+            isVertical
+            isEven={index % 2 === 0}
+            isOdd={index % 2 !== 0}
+            shouldAnimate={shouldAnimate}
             />
-          ),
-        )}
+            ),
+            )}
       </SLines>
     </SLinesWrapper>
   )

@@ -4,12 +4,10 @@ export const SApp = styled.div<any>(({ theme }: any) => ({
   display: 'flex',
   position: 'relative',
   justifyContent: 'center',
-  paddingTop: '1rem',
   transition: theme.transition,
-  width: '100%',
   fontSize: '0.6rem',
   minHeight: '100%',
-  height: '100%',
+  height: '100vh',
 
   ...(!theme.isSketched && {
     fontFamily: theme.fonts.main,

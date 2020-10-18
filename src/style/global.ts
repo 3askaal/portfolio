@@ -1,6 +1,10 @@
 import { createGlobalStyle } from 'styled-components'
 
 export const LocalGlobalStyle = createGlobalStyle<any>(({ theme }) => ({
+  body: {
+    width: 'auto'
+  },
+
   a: {
     color: theme.colors.sketch.pen,
 

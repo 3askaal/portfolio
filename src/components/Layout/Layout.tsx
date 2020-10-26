@@ -50,6 +50,7 @@ export const SLayoutSwitch = styled.div(({ theme }: any) => ({
   right: 0,
   top: 0,
   marginTop: '1rem',
+  marginRight: '1rem',
   zIndex: 1,
   transition: theme.transition,
 }))
@@ -82,8 +83,6 @@ export const SLayoutContent = styled.div(({ maxWidth }: any) =>
     width: '100%',
     maxWidth: maxWidth || '23rem',
     paddingTop: ['1rem', '2rem'],
-    paddingLeft: ['3rem', '3rem'],
-    paddingRight: ['1rem', '2rem'],
     paddingBottom: '3rem',
   }),
 )
@@ -153,7 +152,14 @@ export const Layout = ({ children, maxWidth, button, pageIndex, hasHoles, ...pro
         <SLayoutSwitch onClick={onSwitchClick}>
           <Switch />
         </SLayoutSwitch>
-          <SLayoutContent maxWidth={maxWidth} ref={containerRef}>{children}</SLayoutContent>
+        <SLayoutContent
+          s={{
+            paddingLeft: hasHoles ? '3rem' : '2rem',
+            paddingRight: hasHoles ? '2rem' : '1rem',
+            maxWidth
+          }}
+          ref={containerRef}
+        >{children}</SLayoutContent>
       </SLayout>
     </SLayoutWrapper>
   )

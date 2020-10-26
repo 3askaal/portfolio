@@ -22,7 +22,7 @@ export function getContainerHeight(el?: any): number {
   const contentHeight = (el || document.documentElement).getBoundingClientRect().height
   const minHeight = contentHeight < windowHeight ? windowHeight : contentHeight
   const sparePixelsInHeight = minHeight % (blockSize * 2)
-  const containerHeight = minHeight - sparePixelsInHeight
+  const containerHeight = minHeight - sparePixelsInHeight + blockSize
 
   return containerHeight
 }

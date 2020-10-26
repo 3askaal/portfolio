@@ -9,7 +9,7 @@ export function getBlockSize(): number {
 
 export function getContainerWidth(el?: any): number {
   const blockSize: number = getBlockSize()
-  const windowWidth = window.outerWidth || window.screen.width
+  const windowWidth = window.outerWidth || window.innerWidth
   const sparePixelsInWidth = windowWidth % (blockSize * 2)
   const containerWidth = windowWidth - sparePixelsInWidth + blockSize
 
@@ -18,7 +18,7 @@ export function getContainerWidth(el?: any): number {
 
 export function getContainerHeight(el?: any): number {
   const blockSize: number = getBlockSize()
-  const windowHeight = window.outerHeight || window.screen.height
+  const windowHeight = window.outerHeight || window.innerHeight
   const contentHeight = (el || document.documentElement).getBoundingClientRect().height
   const minHeight = contentHeight < windowHeight ? windowHeight : contentHeight
   const sparePixelsInHeight = minHeight % (blockSize * 2)

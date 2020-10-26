@@ -34,7 +34,7 @@ export const MiscProvider = ({ children }: any) => {
       amountBlocks: getContainerHeight(el) / getBlockSize()
     }
 
-    console.log('paper: ', newContainerDimensions)
+    console.log('container: ', newContainerDimensions)
     setLayoutDimensions(newContainerDimensions)
   
     const newPaperDimensions: any = {

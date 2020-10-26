@@ -154,8 +154,8 @@ export const Layout = ({ children, maxWidth, button, pageIndex, hasHoles, ...pro
         </SLayoutSwitch>
         <SLayoutContent
           s={{
-            paddingLeft: hasHoles ? '3rem' : '2rem',
-            paddingRight: hasHoles ? '2rem' : '1rem',
+            paddingLeft: hasHoles ? ['3rem'] : ['2rem'],
+            paddingRight: hasHoles ? ['2rem'] : ['2rem'],
             maxWidth
           }}
           ref={containerRef}

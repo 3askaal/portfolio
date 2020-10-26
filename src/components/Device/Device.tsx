@@ -23,6 +23,10 @@ import { fadeIn } from '../../style'
 const SDeviceWrapper = styled.div<any>(
   ({ theme }) =>
     ({
+      display: 'flex',
+      justifyContent: 'center',
+      width: '100%',
+
       ...(!theme.isSketched && {
         perspective: '1500px',
       }),
@@ -31,7 +35,6 @@ const SDeviceWrapper = styled.div<any>(
 
 const SDevice = styled.div<any>(({ theme, width, height, transition }) => ({
   position: 'relative',
-  flexGrow: 1,
   width: `${width}rem`,
   height: `${height}rem`,
 

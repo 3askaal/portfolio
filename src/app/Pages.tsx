@@ -13,7 +13,7 @@ const SPagesWrapper = styled.div({
 const SPages = styled.div({
   display: 'flex',
   justifyContent: 'flex-start',
-  alignItems: 'flex-start'
+  alignItems: 'flex-start',
 })
 
 export const Pages = ({ children }: any) => {

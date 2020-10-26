@@ -13,7 +13,7 @@ export const MiscProvider = ({ children }: any) => {
   const [currentPageIndex, setCurrentPageIndex] = useState(0)
   const [previousPageIndex, setPreviousPageIndex] = useState(0)
   const [currentProjectIndex, setCurrentProjectIndex] = useState(0)
-  const [currentLayoutElement, setCurrentLayoutElement] = useState(0)
+  const [currentLayoutElement, setCurrentLayoutElement] = useState(null)
   const location = useLocation()
 
   const nextPage = () => {

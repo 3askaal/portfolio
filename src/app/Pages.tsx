@@ -5,9 +5,10 @@ import { MiscContext } from '../context'
 import { Lines } from '../components'
 
 const SPagesWrapper = styled.div({
+  position: 'relative',
   display: 'flex',
   width: '100vw',
-  overflow: 'hidden'
+  overflow: 'hidden',
 })
 
 const SPages = styled.div({

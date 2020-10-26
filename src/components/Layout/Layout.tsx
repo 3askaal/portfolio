@@ -124,13 +124,11 @@ export const Layout = ({ children, maxWidth, button, pageIndex, hasHoles, ...pro
   }, [layoutDimensions])
 
   return (
-    <SLayoutWrapper>
+    <SLayoutWrapper s={{
+      height: !isLoading ? layoutDimensions.height : 'auto',
+      width: layoutDimensions.width,
+    }}>
       <SLayout
-        s={{
-          width: layoutDimensions.width,
-          height: !isLoading ? layoutDimensions.height : 'auto',
-          // maxHeight: currentPageIndex !== pageIndex ? 0 : null,
-        }}
         {...props}>
         { hasHoles ? (
           <SLayoutHoles>
@@ -154,8 +152,8 @@ export const Layout = ({ children, maxWidth, button, pageIndex, hasHoles, ...pro
         </SLayoutSwitch>
         <SLayoutContent
           s={{
-            paddingLeft: hasHoles ? ['3rem'] : ['2rem'],
-            paddingRight: hasHoles ? ['2rem'] : ['2rem'],
+            paddingLeft: hasHoles ? ['3rem'] : ['1rem', '2rem'],
+            paddingRight: hasHoles ? ['2rem'] : ['1rem', '2rem'],
             maxWidth
           }}
           ref={containerRef}

@@ -8,8 +8,9 @@ import { PROJECTS } from '../../constants'
 import { MiscContext } from '../../context'
 
 export const ProjectsView = () => {
-  const { currentProjectIndex, setCurrentProjectIndex }: any = useContext(MiscContext)
+  const { currentProjectIndex, setCurrentProjectIndex, currentPageIndex }: any = useContext(MiscContext)
   const location: any = useLocation()
+  const history: any = useHistory()
 
   useEffect(() => {
     if (!location.hash) {
@@ -23,7 +24,10 @@ export const ProjectsView = () => {
         locationProjectIndex !== -1 &&
         locationProjectIndex !== currentProjectIndex
       ) {
-        setCurrentProjectIndex(locationProjectIndex)
+        if (currentPageIndex === 1) {
+          setCurrentProjectIndex(locationProjectIndex)
+          history.push(`#${PROJECTS[locationProjectIndex].tag}`)
+        }
       }
     }
   }, [currentProjectIndex, location.hash])

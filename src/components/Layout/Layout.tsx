@@ -21,6 +21,7 @@ export const SLayout = styled.div(
     position: 'relative',
     display: 'flex',
     justifyContent: 'center',
+    width: '100%',
     zIndex: 1,
   })
 )

@@ -9,7 +9,7 @@ export function getBlockSize(): number {
 
 export function getContainerWidth(el?: any): number {
   const blockSize: number = getBlockSize()
-  const windowWidth = window.outerWidth || window.innerWidth
+  const windowWidth = window.innerWidth || window.outerWidth
   const sparePixelsInWidth = windowWidth % (blockSize * 2)
   const containerWidth = windowWidth - sparePixelsInWidth + blockSize
 

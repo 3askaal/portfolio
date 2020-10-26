@@ -12,7 +12,7 @@ export const MiscProvider = ({ children }: any) => {
   const [paperDimensions, setPaperDimensions] = useState({})
   const [currentPageIndex, setCurrentPageIndex] = useState(0)
   const [previousPageIndex, setPreviousPageIndex] = useState(0)
-  const [currentProjectIndex, setCurrentProjectIndexState] = useState(0)
+  const [currentProjectIndex, setCurrentProjectIndex] = useState(0)
   const location = useLocation()
   const history: any = useHistory()
 
@@ -60,11 +60,6 @@ export const MiscProvider = ({ children }: any) => {
   useEffect(() => {
     updateDimensions()
   }, [currentPageIndex])
-
-  const setCurrentProjectIndex = (value: number) => {
-    setCurrentProjectIndexState(value)
-    history.push(`#${PROJECTS[value].tag}`)
-  }
 
   return (
     <MiscContext.Provider

@@ -4,56 +4,48 @@ import { styled } from '3oilerplate'
 import { MiscContext } from '../context'
 import { Lines } from '../components'
 
-const SPages = styled.div({
+const SPagesWrapper = styled.div({
   display: 'flex',
-  alignItems: 'flex-start',
-  left: '0',
-  height: '100vh',
-  // flexBasis: '100vw',
+  width: '100vw'
 })
 
-const SWrapper = styled.div({
+const SPages = styled.div({
   display: 'flex',
+  justifyContent: 'flex-start',
   alignItems: 'flex-start',
-  // flexBasis: '100vw',
 })
 
 export const Pages = ({ children }: any) => {
-  const { currentPageIndex }: any = useContext<any>(MiscContext)
+  const { currentPageIndex, previousPageIndex }: any = useContext<any>(MiscContext)
   const [initial, setInitial] = useState({})
   const [animate, setAnimate] = useState({})
-  const [exit, setExit] = useState({})
+  // const [exit, setExit] = useState({})
 
 
   useEffect(() => {
     setInitial({
-      transform: `translateX(-${50 * currentPageIndex}%)`,
+      transform: `translateX(-${100 * previousPageIndex}vw)`,
     })
     setAnimate({
-      transform: `translateX(-${50 * currentPageIndex}%)`,
+      transform: `translateX(-${100 * currentPageIndex}vw)`,
     })
-    setExit({
-      transform: `translateX(-${50 * currentPageIndex}%)`,
-    })
+    // setExit({
+    //   transform: `translateX(-${100 * currentPageIndex}vw)`,
+    // })
   }, [currentPageIndex])
 
-  return <SWrapper s={{display: 'flex', justifyContent: 'flex-start'}}>
-    <motion.div
-      initial={initial}
-      animate={animate}
-      exit={exit}
-      style={{
-        display: 'flex',
-        justifyContent: 'flex-start',
-        maxHeight: '100vh',
-        overflow: 'hidden',
-        position: 'relative',
-      }}
-     >
-       <Lines amountPages={children.length}/>
+  return (
+    <SPagesWrapper>
+      <motion.div
+        initial={initial}
+        animate={animate}
+        // exit={exit}
+      >
+        <Lines amountPages={children.length} />
         <SPages>
           { children }
         </SPages>
-     </motion.div>
-  </SWrapper>
+      </motion.div>
+    </SPagesWrapper>
+  )
 }

@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { rgba } from '3oilerplate'
 import { times } from 'lodash'
+import { MiscContext } from '../../context'
 
 const SHoles = styled.div(({ theme }) => ({
   height: '100%',
+  overflow: 'hidden'
 }))
 
 const SHole = styled.div(({ theme }) => ({
@@ -19,9 +21,11 @@ const SHole = styled.div(({ theme }) => ({
 }))
 
 export const Holes = () => {
+  const { containerDimensions }: any = useContext<any>(MiscContext)
+
   return (
     <SHoles>
-      {times(40, (index: number) => (
+      {times(containerDimensions.amountBlocks / 2, (index: number) => (
         <SHole key={index} />
       ))}
     </SHoles>

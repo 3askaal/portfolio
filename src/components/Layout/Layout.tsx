@@ -1,21 +1,20 @@
-import React, { useEffect, useState, useContext, useRef } from 'react'
+import React, { Ref, useContext, useEffect, useRef, useState } from 'react'
 import { styled } from '3oilerplate'
 import ReactGA from 'react-ga'
-import { debounce } from 'lodash'
-import { width, height, space } from 'styled-system'
 import { ChevronLeft as ChevronLeftIcon, ChevronRight as ChevronRightIcon } from 'react-feather'
-import { getContainerHeight, getContainerWidth } from '../../helpers'
 import { Holes, Switch , Button } from '..'
 import { MiscContext } from '../../context'
+import { getContainerHeight } from '../../helpers'
 
 
 export const SLayoutWrapper = styled.div(
   ({ theme, isSketched }: any) => ({
     display: 'flex',
-    width: '100vw',
-    maxWidth: '100%',
-    // justifyContent: 'center'
-    paddingLeft: '1rem'
+    minHeight: '100vh',
+
+    '+ *': {
+      marginLeft: '1rem'
+    }
   }),
 )
 
@@ -25,10 +24,7 @@ export const SLayout = styled.div(
     display: 'flex',
     justifyContent: 'center',
     zIndex: 1,
-  }),
-  width,
-  height,
-  space,
+  })
 )
 
 export const SLayoutHoles = styled.div(({ theme }: any) =>
@@ -42,7 +38,8 @@ export const SLayoutHoles = styled.div(({ theme }: any) =>
     paddingTop: '0.12rem',
     opacity: 1,
     transition: theme.transition,
-    marginLeft: ['-1rem', '0'],
+    marginTop: '1rem',
+    marginLeft: '1rem',
 
     ...(!theme.isSketched && {
       opacity: 0,
@@ -55,7 +52,6 @@ export const SLayoutSwitch = styled.div(({ theme }: any) => ({
   right: 0,
   top: 0,
   marginTop: '1rem',
-  marginRight: '1rem',
   zIndex: 1,
   transition: theme.transition,
 }))
@@ -88,21 +84,24 @@ export const SLayoutContent = styled.div(({ maxWidth }: any) =>
     width: '100%',
     maxWidth: maxWidth || '23rem',
     paddingTop: ['1rem', '2rem'],
-    paddingLeft: ['1rem', '2rem'],
+    paddingLeft: ['3rem', '3rem'],
     paddingRight: ['1rem', '2rem'],
     paddingBottom: '3rem',
   }),
 )
 
 export const Layout = ({ children, maxWidth, button, pageIndex, ...props }: any) => {
-  const { isSketched, setIsSketched, currentPageIndex, nextPage, previousPage }: any = useContext(MiscContext)
-  const [containerWidth, setContainerWidth] = useState(getContainerWidth())
-  const [containerHeight, setContainerHeight] = useState(getContainerHeight())
+  const {
+    isSketched,
+    setIsSketched,
+    containerDimensions,
+    currentPageIndex,
+    nextPage,
+    previousPage
+  }: any = useContext(MiscContext)
 
-  function updateDimensions() {
-    setContainerWidth(getContainerWidth())
-    setContainerHeight(getContainerHeight())
-  }
+  const containerRef: Ref<any> = useRef()
+  const [currentContainerHeight, setCurrentContainerHeight] = useState<number>(0)
 
   function onSwitchClick() {
     ReactGA.event({
@@ -113,39 +112,44 @@ export const Layout = ({ children, maxWidth, button, pageIndex, ...props }: any)
   }
 
   useEffect(() => {
-    updateDimensions()
-    window.addEventListener('resize', debounce(updateDimensions, 200))
-
-    return () => {
-      window.removeEventListener('resize', debounce(updateDimensions, 200))
+    if (pageIndex === currentPageIndex) {
+      setCurrentContainerHeight(getContainerHeight(containerRef.current))
+      console.log(getContainerHeight(containerRef.current))
     }
-  }, [])
+  }, [currentPageIndex])
 
   return (
-    <SLayoutWrapper>
+    <SLayoutWrapper
+      ref={containerRef}
+    >
       <SLayout
-        s={{
-          width: containerWidth,
-          height: containerHeight,
-          display: currentPageIndex === pageIndex ? 'visible' : 'hidden'
-        }}
         {...props}
+        s={{
+          width: containerDimensions.width,
+          // height: currentPageIndex === pageIndex ? currentContainerHeight : 0
+        }}
       >
-        { !currentPageIndex && (
+        { currentPageIndex === 0 && (
           <SLayoutHoles>
             <Holes />
           </SLayoutHoles>
         )}
         <SLayoutNav position={button}>
-          <Button square onClick={() => button === 'right' ? nextPage() : previousPage()}>
-            { button === 'left' && <ChevronLeftIcon /> }
-            { button === 'right' && <ChevronRightIcon /> }
-          </Button>
+          { button === 'left' && (
+            <Button square onClick={() => previousPage()}>
+              <ChevronLeftIcon />
+            </Button>
+          )}
+          { button === 'right' && (
+            <Button square onClick={() => nextPage()}>
+              <ChevronRightIcon />
+            </Button>
+          )}
         </SLayoutNav>
         <SLayoutSwitch onClick={onSwitchClick}>
           <Switch />
         </SLayoutSwitch>
-        <SLayoutContent maxWidth={maxWidth}>{children}</SLayoutContent>
+          <SLayoutContent maxWidth={maxWidth}>{children}</SLayoutContent>
       </SLayout>
     </SLayoutWrapper>
   )

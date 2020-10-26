@@ -7,7 +7,6 @@ export const SApp = styled.div<any>(({ theme }: any) => ({
   transition: theme.transition,
   fontSize: '0.6rem',
   minHeight: '100%',
-  height: '100vh',
 
   ...(!theme.isSketched && {
     fontFamily: theme.fonts.main,

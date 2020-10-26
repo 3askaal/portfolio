@@ -1,43 +1,28 @@
-export function getContainerWidth() {
-  const blockSize = parseInt(
+export function getBlockSize(): number {
+  return parseInt(
     window
       .getComputedStyle(document.documentElement)
       .getPropertyValue('font-size'),
     10,
   )
+}
 
-  const screenWidth = window.innerWidth
-  const sparePixelsInWidth = (screenWidth + (2 * blockSize)) % (blockSize * 2)
-  let containerWidth = screenWidth - sparePixelsInWidth
-
-  if (sparePixelsInWidth < blockSize * 1.5) {
-    containerWidth -= blockSize
-  } else {
-    containerWidth += blockSize
-  }
-
-  console.log(containerWidth)
+export function getContainerWidth(): number {
+  const blockSize: number = getBlockSize()
+  const windowWidth = window.screen.width
+  const sparePixelsInWidth = windowWidth % (blockSize * 2)
+  const containerWidth = windowWidth - sparePixelsInWidth
 
   return containerWidth
 }
 
-export function getContainerHeight() {
-  const blockSize = parseInt(
-    window
-      .getComputedStyle(document.documentElement)
-      .getPropertyValue('font-size'),
-    10,
-  )
-
-  const screenHeight = window.innerHeight
-  const sparePixelsInHeight = screenHeight % (blockSize * 2)
-  let containerHeight = screenHeight - sparePixelsInHeight
-
-  if (sparePixelsInHeight < blockSize * 1.5) {
-    containerHeight -= blockSize
-  } else {
-    containerHeight += blockSize
-  }
+export function getContainerHeight(el?: any): number {
+  const blockSize: number = getBlockSize()
+  const windowHeight = window.innerHeight
+  const contentHeight = (el || document.documentElement).getBoundingClientRect().height
+  const minHeight = contentHeight < windowHeight ? windowHeight : contentHeight
+  const sparePixelsInHeight = minHeight % (blockSize * 2)
+  const containerHeight = minHeight - sparePixelsInHeight
 
   return containerHeight
 }

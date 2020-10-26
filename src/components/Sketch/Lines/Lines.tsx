@@ -1,25 +1,26 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { times, debounce } from 'lodash'
-import { useLocation } from 'react-router-dom'
+import { times } from 'lodash'
 import { rgba } from '3oilerplate'
 import styled, { keyframes, css } from 'styled-components'
-import { motion } from 'framer-motion'
-import { getContainerWidth } from '../../../helpers'
+import { width, height } from 'styled-system'
 import { MiscContext } from '../../../context'
 
 const SLinesWrapper = styled.div<any>(() => ({
-  position: 'absolute',
-  top: 0,
-  left: 0,
-  right: 0,
-  bottom: 0,
-  pointerEvents: 'none',
-  overflow: 'hidden',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    pointerEvents: 'none',
+    overflow: 'hidden',
 
-  svg: {
-    overflow: 'visible',
-  },
-}))
+    svg: {
+      overflow: 'visible',
+    },
+  }),
+  width,
+  height
+)
 
 const SLines = styled.svg<any>(({ isVertical }) => ({
   position: 'absolute',
@@ -150,36 +151,38 @@ const SLinesLine = styled.line<any>(
 )
 
 export const Lines = ({ duration = 1, delay = 0.5, amountPages }: any) => {
-  const location: any = useLocation()
-  const { isSketched } = useContext<any>(MiscContext)
+  const { isSketched, paperDimensions } = useContext<any>(MiscContext)
   const [values, setValues] = useState<any>({})
   const [shouldAnimate, setShouldAnimate] = useState<any>(false)
   const { currentPageIndex }: any = useContext<any>(MiscContext)
 
-  function updateValues() {
-    const newValues = {
-      maxWidth: Math.round(document.body.clientWidth * amountPages),
-      maxHeight: Math.round(document.body.clientHeight),
-      blockSize: parseInt(
-        window
-          .getComputedStyle(document.documentElement)
-          .getPropertyValue('font-size'),
-        10,
-      ),
-      containerWidth: getContainerWidth(),
-    }
+  // function updateValues() {
+  //   const newValues = {
+  //     maxWidth: Math.round(document.body.clientWidth * amountPages),
+  //     maxHeight: Math.round(document.body.clientHeight),
+  //     blockSize: parseInt(
+  //       window
+  //         .getComputedStyle(document.documentElement)
+  //         .getPropertyValue('font-size'),
+  //       10,
+  //     ),
+  //     containerWidth: getContainerWidth(),
+  //   }
+    
+  //   console.log('Lines:')
+  //   console.log(newValues)
 
-    setValues(newValues)
-  }
+  //   setValues(newValues)
+  // }
 
   useEffect(() => {
     setShouldAnimate(false)
-    updateValues()
-    window.addEventListener('resize', debounce(updateValues, 50))
+    // updateValues()
+    // window.addEventListener('resize', debounce(updateValues, 50))
 
-    return () => {
-      window.removeEventListener('resize', debounce(updateValues, 50))
-    }
+    // return () => {
+    //   window.removeEventListener('resize', debounce(updateValues, 50))
+    // }
   }, [currentPageIndex])
 
   useEffect(() => {
@@ -189,27 +192,23 @@ export const Lines = ({ duration = 1, delay = 0.5, amountPages }: any) => {
     }
   }, [isSketched])
 
-  useEffect(() => {
-
-  }, [currentPageIndex])
-
   return (
-    <SLinesWrapper>
+    <SLinesWrapper width={paperDimensions.width} height={paperDimensions.height}>
       <SLines
-        width={values.maxWidth}
-        height={values.maxHeight}
-        viewBox={`0 0 ${values.maxWidth || 0} ${values.maxHeight || 0}`}
+        width={paperDimensions.width}
+        height={paperDimensions.height}
+        viewBox={`0 0 ${paperDimensions.width || 0} ${paperDimensions.height || 0}`}
         >
         {times(
-          Math.floor(values.maxHeight / values.blockSize) + 2,
+          Math.floor(paperDimensions.height / paperDimensions.blockSize) + 2,
           (index: number) => (
             <SLinesLine
             key={`horizontal${index - 1}`}
-            x1={values.maxWidth}
-            y1={(index - 1) * values.blockSize}
-            y2={(index - 1) * values.blockSize}
-            strokeDasharray={values.maxWidth}
-            strokeDashoffset={values.maxWidth}
+            x1={paperDimensions.width}
+            y1={(index - 1) * paperDimensions.blockSize}
+            y2={(index - 1) * paperDimensions.blockSize}
+            strokeDasharray={paperDimensions.width}
+            strokeDashoffset={paperDimensions.width}
             duration={duration}
             delay={delay}
             isHorizontal
@@ -221,21 +220,21 @@ export const Lines = ({ duration = 1, delay = 0.5, amountPages }: any) => {
             )}
       </SLines>
       <SLines
-        width={values.containerWidth}
-        height={values.maxHeight}
-        viewBox={`0 0 ${values.containerWidth || 0} ${values.maxHeight || 0}`}
+        width={paperDimensions.width}
+        height={paperDimensions.height}
+        viewBox={`0 0 ${paperDimensions.width || 0} ${paperDimensions.height || 0}`}
         isVertical
         >
         {times(
-          Math.floor(values.maxWidth / values.blockSize) + 1,
+          Math.floor(paperDimensions.width / paperDimensions.blockSize) + 1,
           (index: number) => (
             <SLinesLine
             key={`vertical${index}`}
-            y1={values.maxHeight}
-            x1={index * values.blockSize}
-            x2={index * values.blockSize}
-            strokeDasharray={values.maxHeight}
-            strokeDashoffset={values.maxHeight}
+            y1={paperDimensions.height}
+            x1={index * paperDimensions.blockSize}
+            x2={index * paperDimensions.blockSize}
+            strokeDasharray={paperDimensions.height}
+            strokeDashoffset={paperDimensions.height}
             duration={duration}
             delay={delay}
             isVertical

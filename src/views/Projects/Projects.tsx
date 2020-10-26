@@ -1,20 +1,15 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 import { findIndex } from 'lodash'
 import ReactGA from 'react-ga'
 import { Row, Col } from '3oilerplate'
 import { Layout, ProjectPreview, ProjectDescription } from '../../components'
 import { PROJECTS } from '../../constants'
+import { MiscContext } from '../../context'
 
 export const ProjectsView = () => {
-  const [currentProjectIndex, setCurrentProjectIndexState] = useState<any>(null)
-  const history: any = useHistory()
+  const { currentProjectIndex, setCurrentProjectIndex }: any = useContext(MiscContext)
   const location: any = useLocation()
-
-  const setCurrentProjectIndex = (value: number) => {
-    setCurrentProjectIndexState(value)
-    history.push(`#${PROJECTS[value].tag}`)
-  }
 
   useEffect(() => {
     if (!location.hash) {

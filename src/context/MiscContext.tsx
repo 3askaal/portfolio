@@ -1,18 +1,20 @@
 import React, { createContext, useEffect, useState } from 'react'
-import { useLocation, Redirect } from 'react-router-dom'
+import { useLocation, useHistory, Redirect } from 'react-router-dom'
 import { debounce, findIndex } from 'lodash'
-import { PAGES } from '../constants'
+import { PAGES, PROJECTS } from '../constants'
 import { getBlockSize, getContainerHeight, getContainerWidth } from '../helpers'
 
 export const MiscContext = createContext({})
 
 export const MiscProvider = ({ children }: any) => {
   const [isSketched, setIsSketched] = useState(true)
-  const [containerDimensions, setContainerDimensions] = useState<any>({})
+  const [layoutDimensions, setLayoutDimensions] = useState<any>({})
   const [paperDimensions, setPaperDimensions] = useState({})
   const [currentPageIndex, setCurrentPageIndex] = useState(0)
   const [previousPageIndex, setPreviousPageIndex] = useState(0)
+  const [currentProjectIndex, setCurrentProjectIndexState] = useState(0)
   const location = useLocation()
+  const history: any = useHistory()
 
   const nextPage = () => {
     setPreviousPageIndex(currentPageIndex)
@@ -24,60 +26,62 @@ export const MiscProvider = ({ children }: any) => {
     setCurrentPageIndex(currentPageIndex - 1)
   }
 
-  const updateDimensions = () => {
-    console.log('Container:')
-    console.log({
+  const updateDimensions = (el?: any) => {
+    const newContainerDimensions: any = {
       width: getContainerWidth(),
-      height: getContainerHeight(),
-    })
-    setContainerDimensions({
-      width: getContainerWidth(),
-      height: getContainerHeight(),
+      height: getContainerHeight(el),
       blockSize: getBlockSize(),
-      amountBlocks: getContainerHeight() / getBlockSize()
-    })
+      amountBlocks: getContainerHeight(el) / getBlockSize()
+    }
 
-    console.log('Paper:')
-    console.log({
+    console.log('paper: ', newContainerDimensions)
+    setLayoutDimensions(newContainerDimensions)
+  
+    const newPaperDimensions: any = {
       height: Math.round(document.body.clientHeight),
-      width: Math.round(window.innerWidth * PAGES.length),
+      width: Math.round(window.screen.width * PAGES.length) + getBlockSize(),
       blockSize: getBlockSize()
-    })
-    setPaperDimensions({
-      height: Math.round(document.body.clientHeight),
-      width: Math.round(document.body.clientWidth * PAGES.length),
-      blockSize: getBlockSize()
-    })
+    }
+
+    console.log('paper: ', newPaperDimensions)
+    setPaperDimensions(newPaperDimensions)
   }
   
   useEffect(() => {
     setCurrentPageIndex(findIndex(PAGES, { path: location.pathname }))
 
-    window.addEventListener('resize', debounce(updateDimensions, 200))
+    // window.addEventListener('resize', debounce(updateDimensions, 200))
 
-    return () => {
-      window.removeEventListener('resize', debounce(updateDimensions, 200))
-    }
+    // return () => {
+    //   // window.removeEventListener('resize', debounce(updateDimensions, 200))
+    // }
   }, [])
 
   useEffect(() => {
     updateDimensions()
   }, [currentPageIndex])
 
+  const setCurrentProjectIndex = (value: number) => {
+    setCurrentProjectIndexState(value)
+    history.push(`#${PROJECTS[value].tag}`)
+  }
+
   return (
     <MiscContext.Provider
       value={{
         isSketched,
         setIsSketched,
-        containerDimensions,
-        setContainerDimensions,
-        paperDimensions,
+        layoutDimensions,
+        setLayoutDimensions,
         updateDimensions,
+        paperDimensions,
         location,
         currentPageIndex,
         previousPageIndex,
         nextPage,
-        previousPage
+        previousPage,
+        currentProjectIndex,
+        setCurrentProjectIndex
       }}
     >
       <Redirect to={PAGES[currentPageIndex].path} />

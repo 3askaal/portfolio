@@ -4,13 +4,11 @@ import ReactGA from 'react-ga'
 import { ChevronLeft as ChevronLeftIcon, ChevronRight as ChevronRightIcon } from 'react-feather'
 import { Holes, Switch , Button } from '..'
 import { MiscContext } from '../../context'
-import { getContainerHeight } from '../../helpers'
-
 
 export const SLayoutWrapper = styled.div(
   ({ theme, isSketched }: any) => ({
     display: 'flex',
-    minHeight: '100vh',
+    overflow: 'hidden',
 
     '+ *': {
       marginLeft: '1rem'
@@ -32,7 +30,7 @@ export const SLayoutHoles = styled.div(({ theme }: any) =>
     position: 'absolute',
     top: 0,
     left: 0,
-    height: '100%',
+    bottom: 0,
     overflow: 'hidden',
     paddingLeft: '0.11rem',
     paddingTop: '0.12rem',
@@ -90,18 +88,20 @@ export const SLayoutContent = styled.div(({ maxWidth }: any) =>
   }),
 )
 
-export const Layout = ({ children, maxWidth, button, pageIndex, ...props }: any) => {
+export const Layout = ({ children, maxWidth, button, pageIndex, hasHoles, ...props }: any) => {
   const {
     isSketched,
     setIsSketched,
-    containerDimensions,
+    layoutDimensions,
+    updateDimensions,
     currentPageIndex,
     nextPage,
-    previousPage
+    previousPage,
+    currentProjectIndex
   }: any = useContext(MiscContext)
 
   const containerRef: Ref<any> = useRef()
-  const [currentContainerHeight, setCurrentContainerHeight] = useState<number>(0)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   function onSwitchClick() {
     ReactGA.event({
@@ -112,28 +112,32 @@ export const Layout = ({ children, maxWidth, button, pageIndex, ...props }: any)
   }
 
   useEffect(() => {
-    if (pageIndex === currentPageIndex) {
-      setCurrentContainerHeight(getContainerHeight(containerRef.current))
-      console.log(getContainerHeight(containerRef.current))
-    }
-  }, [currentPageIndex])
+    setTimeout(() => {
+      if (pageIndex === currentPageIndex) {
+        setIsLoading(true)
+        updateDimensions(containerRef.current)
+      }
+    }, 200)
+  }, [currentPageIndex, currentProjectIndex])
+
+  useEffect(() => {
+    setIsLoading(false)
+  }, [layoutDimensions])
 
   return (
-    <SLayoutWrapper
-      ref={containerRef}
-    >
+    <SLayoutWrapper>
       <SLayout
-        {...props}
         s={{
-          width: containerDimensions.width,
-          // height: currentPageIndex === pageIndex ? currentContainerHeight : 0
+          width: layoutDimensions.width,
+          height: !isLoading ? layoutDimensions.height : 'auto',
+          // maxHeight: currentPageIndex !== pageIndex ? 0 : null,
         }}
-      >
-        { currentPageIndex === 0 && (
+        {...props}>
+        { hasHoles ? (
           <SLayoutHoles>
             <Holes />
           </SLayoutHoles>
-        )}
+        ) : null }
         <SLayoutNav position={button}>
           { button === 'left' && (
             <Button square onClick={() => previousPage()}>
@@ -149,7 +153,7 @@ export const Layout = ({ children, maxWidth, button, pageIndex, ...props }: any)
         <SLayoutSwitch onClick={onSwitchClick}>
           <Switch />
         </SLayoutSwitch>
-          <SLayoutContent maxWidth={maxWidth}>{children}</SLayoutContent>
+          <SLayoutContent maxWidth={maxWidth} ref={containerRef}>{children}</SLayoutContent>
       </SLayout>
     </SLayoutWrapper>
   )

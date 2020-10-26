@@ -23,7 +23,7 @@ export const Social = () => {
     <SSocial>
       {SOCIAL.map(({ icon, url, name }: any) => (
         <Button
-          key={keyGen()}
+          key={name}
           circle
           href={url}
           target="_blank"

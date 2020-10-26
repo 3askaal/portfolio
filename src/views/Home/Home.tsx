@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import { Link } from 'react-router-dom'
 import ReactGA from 'react-ga'
 import { Avatar, Layout, Body, Space, Social } from '../../components'
 
@@ -10,15 +9,14 @@ export const HomeView = () => {
 
 
   return (
-    <Layout paddingTop={['0rem', '1rem', '2rem']} button="right" pageIndex={0}>
+    <Layout paddingTop={['0rem', '1rem', '2rem']} button="right" pageIndex={0} hasHoles>
       <Avatar />
       <Space />
       <Body>
         <p>Hello, I'm Bas.</p>
         <p>
-          I'm a Full-stack developer living in Amsterdam, Netherlands.
-          Specialized in Front-end but also likes doing Back-end and UX in{' '}
-          side projects. Currently working for{' '}
+          I'm a Front-end developer who also loves doing Back-end and UX in side projects.
+          Living in Amsterdam, Netherlands. Currently working for{' '}
           <a href="https://bloqhouse.com/" target="_blank" rel="noreferrer">
             Bloqhouse
           </a>
@@ -29,7 +27,7 @@ export const HomeView = () => {
           Vue, Apollo, Styled Components, lodash
         </p>
         <p>
-          Besides building and designing things I love{' '}
+          Besides building things I like{' '}
           <a
             href="https://www.thrashermagazine.com/articles/videos/dime-s-knowing-mixtape-vol-2/"
             target="_blank"
@@ -44,8 +42,7 @@ export const HomeView = () => {
             rel="noreferrer"
           >
             music
-          </a>
-          .
+          </a>.
         </p>
       </Body>
       <Space />

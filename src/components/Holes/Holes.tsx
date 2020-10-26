@@ -21,11 +21,11 @@ const SHole = styled.div(({ theme }) => ({
 }))
 
 export const Holes = () => {
-  const { containerDimensions }: any = useContext<any>(MiscContext)
+  const { layoutDimensions }: any = useContext<any>(MiscContext)
 
   return (
     <SHoles>
-      {times(containerDimensions.amountBlocks / 2, (index: number) => (
+      {times(layoutDimensions.amountBlocks / 2, (index: number) => (
         <SHole key={index} />
       ))}
     </SHoles>

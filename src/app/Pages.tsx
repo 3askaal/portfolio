@@ -25,10 +25,10 @@ export const Pages = ({ children }: any) => {
 
   useEffect(() => {
     setInitial({
-      transform: `translate3d(-${(layoutDimensions.width ? layoutDimensions.width + layoutDimensions.blockSize : 0) * previousPageIndex}px, 0, 0)`,
+      x: -Math.abs((layoutDimensions.width ? layoutDimensions.width + layoutDimensions.blockSize : 0) * previousPageIndex),
     })
     setAnimate({
-      transform: `translate3d(-${(layoutDimensions.width ? layoutDimensions.width + layoutDimensions.blockSize : 0) * currentPageIndex}px, 0, 0)`,
+      x: -Math.abs((layoutDimensions.width ? layoutDimensions.width + layoutDimensions.blockSize : 0) * currentPageIndex),
     })
     // setExit({
     //   transform: `translateX(-${100 * currentPageIndex}vw)`,
@@ -40,7 +40,7 @@ export const Pages = ({ children }: any) => {
       <motion.div
         initial={initial}
         animate={animate}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.5, type: "tween" }}
         // exit={exit}
       >
         <Lines amountPages={children.length} />

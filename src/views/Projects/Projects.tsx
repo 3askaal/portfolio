@@ -10,15 +10,14 @@ import { MiscContext } from '../../context'
 export const ProjectsView = () => {
   const { currentProjectIndex, setCurrentProjectIndex, currentPageIndex }: any = useContext(MiscContext)
   const location: any = useLocation()
-  const history: any = useHistory()
 
   useEffect(() => {
-    if (!location.hash) {
-      setCurrentProjectIndex(0)
-    } else {
+    if (location.hash) {
       const locationProjectIndex = findIndex(PROJECTS, {
         tag: location.hash.substring(1),
       })
+
+      console.log(locationProjectIndex)
 
       if (
         locationProjectIndex !== -1 &&
@@ -26,11 +25,10 @@ export const ProjectsView = () => {
       ) {
         if (currentPageIndex === 1) {
           setCurrentProjectIndex(locationProjectIndex)
-          history.push(`#${PROJECTS[locationProjectIndex].tag}`)
         }
       }
     }
-  }, [currentProjectIndex, location.hash])
+  }, [location])
 
   useEffect(() => {
     ReactGA.pageview('/projects')

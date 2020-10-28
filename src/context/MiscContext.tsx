@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react'
 import { useLocation, useHistory, Redirect } from 'react-router-dom'
 import { debounce, findIndex } from 'lodash'
-import { PAGES } from '../constants'
+import { PAGES, PROJECTS } from '../constants'
 import { getBlockSize, getContainerHeight, getContainerWidth } from '../helpers'
 
 export const MiscContext = createContext({})
@@ -79,7 +79,7 @@ export const MiscProvider = ({ children }: any) => {
         setCurrentProjectIndex
       }}
     >
-      <Redirect to={PAGES[currentPageIndex].path} />
+      <Redirect to={`${PAGES[currentPageIndex].path}${currentPageIndex > 0 ? `#${PROJECTS[currentProjectIndex].tag}` : ''}`} />
       {children}
     </MiscContext.Provider>
   )

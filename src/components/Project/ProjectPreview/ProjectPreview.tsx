@@ -16,6 +16,7 @@ export const ProjectPreview = ({
     setTimeout(() => setIsNavigating(false), 1000)
 
     if (currentProjectIndex < PROJECTS.length - 1) {
+      console.log('next project')
       setCurrentProjectIndex(currentProjectIndex + 1)
       ReactGA.event({
         category: 'Projects',
@@ -29,6 +30,7 @@ export const ProjectPreview = ({
     setTimeout(() => setIsNavigating(false), 1000)
 
     if (currentProjectIndex > 0) {
+      console.log('prev project')
       setCurrentProjectIndex(currentProjectIndex - 1)
       ReactGA.event({
         category: 'Projects',

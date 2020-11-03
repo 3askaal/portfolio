@@ -54,19 +54,21 @@ const SDeviceScreen = styled.div<any>(({ theme }) => ({
   }),
 }))
 
-// const SDeviceScreenBack = styled.div<any>(({ theme }) => ({
-//   position: 'absolute',
-//   display: 'block',
-//   top: 0,
-//   left: 0,
-//   right: 0,
-//   bottom: 0,
-//   width: '100%',
-//   height: '100%',
-//   backgroundColor: 'black',
-//   transform: 'translate3d(0, 0, -1px)',
-//   pointerEvents: 'none',
-// }))
+const SDeviceScreenBack = styled.div<any>(({ theme }) => ({
+  position: 'absolute',
+  display: 'block',
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  backgroundColor: 'black',
+  transform: 'translateZ(-2px)',
+  pointerEvents: 'none',
+
+  ...(theme.isSketched && {
+    display: 'none'
+  }),
+}))
 
 const SDeviceScreenContent = styled.div<any>(({ theme }) => ({
   position: 'relative',
@@ -107,8 +109,7 @@ const SDeviceScreenContentNoise = styled.div<any>(
     right: '-500px',
     bottom: '-500px',
     left: '-500px',
-    background:
-      'transparent url(https://www.dropbox.com/s/h7ab1c82ctzy83n/noise.png?raw=1) 0 0',
+    background: 'transparent url(https://www.dropbox.com/s/h7ab1c82ctzy83n/noise.png?raw=1) 0 0',
     backgroundSize: '320px 320px',
     opacity: 0.35,
     display: 'none',
@@ -152,6 +153,7 @@ const SDeviceFace = styled.div<any>(
   ({ theme, type, width, height, depth, radius }) => ({
     position: 'absolute',
     display: 'none',
+    transformStyle: 'preserve-3d',
 
     ...(theme.isSketched && {
       backgroundColor: 'transparent',
@@ -330,24 +332,24 @@ export const Device = ({ currentProjectIndex }: any) => {
       setInterval(() => {
         if (deviceTransition.direction === 'left') tilt('right')
         if (deviceTransition.direction === 'right') tilt('left')
-      }, 4050)
+      }, 4000)
     )
   }
 
   useEffect(() => {
-    if (isSketched) return;
-
     if (deviceTransitionInterval) {
       clearInterval(deviceTransitionInterval)
       setDeviceTransitionInterval(null)
     }
 
-    flip()
+    if (!isSketched) {
+      flip()
+    }
   }, [currentProjectIndex])
 
   useEffect(() => {
-    if (deviceTransition.type === 'flip') {
-      setTimeout(startTilt, (deviceTransition.duration * 1000) + 50)
+    if (!isSketched && deviceTransition.type === 'flip') {
+      setTimeout(startTilt, deviceTransition.duration * 1000)
     }
 
     return () => {
@@ -359,12 +361,14 @@ export const Device = ({ currentProjectIndex }: any) => {
   return (
     <SDeviceWrapper>
       <motion.div
-          animate={deviceTransition.style}
-          transition={{ duration: deviceTransition.duration }}
-          style={{
-            transformStyle: 'preserve-3d',
-            transitionProperty: 'all',
-          }}
+          {...(!isSketched && {
+            animate: deviceTransition.style,
+            transition: { duration: deviceTransition.duration },
+            style: {
+              transformStyle: 'preserve-3d',
+              transitionProperty: 'all',
+            }
+          })}
         >
         <SDevice
           width={DEVICE_DIMENSIONS.width}
@@ -413,7 +417,7 @@ export const Device = ({ currentProjectIndex }: any) => {
                         </SDeviceScreenButton>
                       </Box>
                     </SDeviceScreenButtons>
-                    {/* <SDeviceScreenBack /> */}
+                    <SDeviceScreenBack />
                   </SDeviceScreen>
                 </>
               )}

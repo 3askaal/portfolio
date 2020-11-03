@@ -50,7 +50,6 @@ export const SLayoutSwitch = styled.div(({ theme }: any) => ({
   right: 0,
   top: 0,
   marginTop: '1rem',
-  marginRight: '1rem',
   zIndex: 1,
   transition: theme.transition,
 }))
@@ -65,10 +64,6 @@ export const SLayoutNav = styled.div(({ theme, position }: any) => ({
   zIndex: 1,
   transition: theme.transition,
   paddingBottom: '2rem',
-
-  ...(position === 'right' && {
-    marginRight: '1rem'
-  }),
 
   ...(position === 'left' && {
     marginLeft: '2rem',

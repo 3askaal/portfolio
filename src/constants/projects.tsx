@@ -2,38 +2,6 @@ import React from 'react'
 
 export const PROJECTS: any = [
   {
-    title: '3oilerplate',
-    tag: '3oilerplate',
-    description: (
-      <>
-        <p>
-          Extremely customizable Component Library and Toolkit for React.
-          Combines the best of{' '}
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://styled-components.com/"
-          >
-            Styled Components
-          </a>{' '}
-          and{' '}
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://styled-system.com/"
-          >
-            Styled System
-          </a>
-          .
-        </p>
-      </>
-    ),
-    demo: 'https://3oilerplate.vercel.app/',
-    repos: {
-      code: 'https://github.com/3askaal/3oilerplate',
-    },
-  },
-  {
     title: 'SkateDice',
     tag: 'skatedice',
     description: (
@@ -68,6 +36,38 @@ export const PROJECTS: any = [
     repos: {
       frontend: 'https://github.com/3askaal/skatedice-client',
       backend: 'https://github.com/3askaal/skatedice-server',
+    },
+  },
+  {
+    title: '3oilerplate',
+    tag: '3oilerplate',
+    description: (
+      <>
+        <p>
+          Extremely customizable Component Library and Toolkit for React.
+          Combines the best of{' '}
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://styled-components.com/"
+          >
+            Styled Components
+          </a>{' '}
+          and{' '}
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://styled-system.com/"
+          >
+            Styled System
+          </a>
+          .
+        </p>
+      </>
+    ),
+    demo: 'https://3oilerplate.vercel.app/',
+    repos: {
+      code: 'https://github.com/3askaal/3oilerplate',
     },
   },
   {

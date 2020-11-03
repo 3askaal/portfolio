@@ -8,7 +8,6 @@ import { MiscContext } from '../../context'
 export const SLayoutWrapper = styled.div(
   ({ theme, isSketched }: any) => ({
     display: 'flex',
-    overflow: 'hidden',
 
     '+ *': {
       marginLeft: '1rem'
@@ -32,7 +31,7 @@ export const SLayoutHoles = styled.div(({ theme }: any) =>
     top: 0,
     left: 0,
     bottom: 0,
-    overflow: 'hidden',
+    // overflow: 'hidden',
     paddingLeft: '0.11rem',
     paddingTop: '0.12rem',
     opacity: 1,
@@ -65,14 +64,14 @@ export const SLayoutNav = styled.div(({ theme, position }: any) => ({
   bottom: 0,
   zIndex: 1,
   transition: theme.transition,
-  paddingBottom: '1rem',
+  paddingBottom: '2rem',
 
   ...(position === 'right' && {
     marginRight: '1rem'
   }),
-  
+
   ...(position === 'left' && {
-    marginLeft: '1rem',
+    marginLeft: '2rem',
     marginTop: '1rem',
     alignItems: 'flex-start'
   }),
@@ -85,6 +84,7 @@ export const SLayoutContent = styled.div(({ maxWidth }: any) =>
     maxWidth: maxWidth || '23rem',
     paddingTop: ['1rem', '2rem'],
     paddingBottom: '3rem',
+    paddingRight: '1rem'
   }),
 )
 
@@ -153,8 +153,8 @@ export const Layout = ({ children, maxWidth, button, pageIndex, hasHoles, ...pro
         </SLayoutSwitch>
         <SLayoutContent
           s={{
-            paddingLeft: hasHoles ? ['3rem'] : ['1rem', '2rem'],
-            paddingRight: hasHoles ? ['2rem'] : ['1rem', '2rem'],
+            paddingLeft: hasHoles ? ['3rem'] : ['2rem', '2rem'],
+            // paddingRight: hasHoles ? ['2rem'] : ['0', '2rem'],
             maxWidth
           }}
           ref={containerRef}

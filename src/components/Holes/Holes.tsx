@@ -6,7 +6,6 @@ import { MiscContext } from '../../context'
 
 const SHoles = styled.div(({ theme }) => ({
   height: '100%',
-  overflow: 'hidden'
 }))
 
 const SHole = styled.div(({ theme }) => ({
@@ -25,7 +24,7 @@ export const Holes = () => {
 
   return (
     <SHoles>
-      {times(layoutDimensions.amountBlocks / 2, (index: number) => (
+      {times((layoutDimensions.amountBlocks / 2) + 1, (index: number) => (
         <SHole key={index} />
       ))}
     </SHoles>

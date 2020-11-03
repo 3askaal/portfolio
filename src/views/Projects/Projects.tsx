@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext } from 'react'
-import { useHistory, useLocation } from 'react-router-dom'
+import React, { useEffect, useContext } from 'react'
+import { useLocation } from 'react-router-dom'
 import { findIndex } from 'lodash'
 import ReactGA from 'react-ga'
 import { Row, Col } from '3oilerplate'
@@ -33,7 +33,7 @@ export const ProjectsView = () => {
   }, [])
 
   return currentProjectIndex !== null ? (
-    <Layout maxWidth="31rem" button="left" pageIndex={1}>
+    <Layout maxWidth="30rem" button="left" pageIndex={1}>
       <Row
         s={{
           flexDirection: ['column', 'column', 'row'],

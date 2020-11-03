@@ -359,7 +359,6 @@ export const Device = ({ currentProjectIndex }: any) => {
   return (
     <SDeviceWrapper>
       <motion.div
-          // initial={previousDeviceTransition.style}
           animate={deviceTransition.style}
           transition={{ duration: deviceTransition.duration }}
           style={{

@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react'
 import styled, { CSSObject, css, keyframes } from 'styled-components'
-import { times } from 'lodash'
+import { times, random } from 'lodash'
+import { motion } from 'framer-motion'
 import { Box, rgba } from '3oilerplate'
 import { useHistory } from 'react-router-dom'
 import ReactGA from 'react-ga'
@@ -33,16 +34,10 @@ const SDeviceWrapper = styled.div<any>(
     } as CSSObject),
 )
 
-const SDevice = styled.div<any>(({ theme, width, height, transition }) => ({
+const SDevice = styled.div<any>(({ width, height }) => ({
   position: 'relative',
   width: `${width}rem`,
   height: `${height}rem`,
-
-  ...(!theme.isSketched && {
-    transformStyle: 'preserve-3d',
-    transitionProperty: 'all',
-    ...transition,
-  }),
 }))
 
 const SDeviceScreen = styled.div<any>(({ theme }) => ({
@@ -268,37 +263,39 @@ export const Device = ({ currentProjectIndex }: any) => {
   const history: any = useHistory()
   const { isSketched }: any = useContext<any>(MiscContext)
   const [cornerPieces, setCornerPieces]: any = useState<any>([])
+  const [previousDeviceTransition, setPreviousDeviceTransition]: any = useState<any>({})
   const [deviceTransition, setDeviceTransition]: any = useState<any>({})
-  const [deviceTransitionInterval, setDeviceTransitionInterval]: any = useState<
-    any
-  >(null)
+  const [deviceTransitionInterval, setDeviceTransitionInterval]: any = useState<any>(null)
   const cornerWidth = calcCornerWidth()
 
   useEffect(() => {
     setCornerPieces(calcCornerPieces())
   }, [])
 
-  const turnLeft = (): void => {
-    setDeviceTransition({
-      transform: `rotateY(${currentProjectIndex * 360 - 15}deg)`,
-      transitionDuration: '4s',
-      transitionEasing: 'ease-in-out',
-    })
-  }
+  const tilt = (direction: string): void => {
 
-  const turnRight = (): void => {
+    let rotateY = currentProjectIndex * 360
+
+    if (direction === 'left') rotateY -= random(5, 15)
+    if (direction === 'right') rotateY += random(5, 15)
+
+    setPreviousDeviceTransition(deviceTransition)
     setDeviceTransition({
-      transform: `rotateY(${currentProjectIndex * 360 + 15}deg)`,
-      transitionDuration: '4s',
-      transitionEasing: 'ease-in-out',
+      type: 'tilt',
+      direction,
+      style: { rotateY },
+      duration: 4,
     })
   }
 
   const flip = (): void => {
+    setPreviousDeviceTransition(deviceTransition)
     setDeviceTransition({
-      transform: `rotateY(${currentProjectIndex * 360}deg)`,
-      transitionDuration: '1s',
-      transitionEasing: 'ease-in-out',
+      type: 'flip',
+      style: {
+        rotateY: currentProjectIndex * 360 + random(-5, 5),
+      },
+      duration: 1,
     })
   }
 
@@ -326,114 +323,125 @@ export const Device = ({ currentProjectIndex }: any) => {
     })
   }
 
+  function startTilt() {
+    tilt('right')
+
+    setDeviceTransitionInterval(
+      setInterval(() => {
+        if (deviceTransition.direction === 'left') tilt('right')
+        if (deviceTransition.direction === 'right') tilt('left')
+      }, 4050)
+    )
+  }
+
   useEffect(() => {
-    if (!isSketched && currentProjectIndex !== null) {
+    if (isSketched) return;
+
+    if (deviceTransitionInterval) {
       clearInterval(deviceTransitionInterval)
       setDeviceTransitionInterval(null)
+    }
 
-      flip()
+    flip()
+  }, [currentProjectIndex])
 
-      setTimeout(() => {
-        turnRight()
-        let turnedRight = true
-
-        setDeviceTransitionInterval(
-          setInterval(() => {
-            if (turnedRight) {
-              turnedRight = false
-              turnLeft()
-            } else {
-              turnedRight = true
-              turnRight()
-            }
-          }, 4000),
-        )
-      }, 1100)
+  useEffect(() => {
+    if (deviceTransition.type === 'flip') {
+      setTimeout(startTilt, (deviceTransition.duration * 1000) + 50)
     }
 
     return () => {
       clearInterval(deviceTransitionInterval)
       setDeviceTransitionInterval(null)
     }
-  }, [currentProjectIndex, isSketched])
+  }, [deviceTransition])
 
   return (
     <SDeviceWrapper>
-      <SDevice
-        width={DEVICE_DIMENSIONS.width}
-        height={DEVICE_DIMENSIONS.height}
-        depth={DEVICE_DIMENSIONS.depth}
-        transition={deviceTransition}
-      >
-        {DEVICE_FACES.map((type: string) => (
-          <SDeviceFace
-            key={type}
-            type={type}
-            width={DEVICE_DIMENSIONS.width}
-            height={DEVICE_DIMENSIONS.height}
-            depth={DEVICE_DIMENSIONS.depth}
-            radius={DEVICE_DIMENSIONS.radius}
-          >
-            {type === 'front' && (
-              <>
-                <Outline radius="1rem" />
-                <SDeviceScreen>
-                  <Outline radius="0.5rem" />
-                  <SDeviceScreenContent>
-                    <Outline />
-                    <Fill />
-                    {!PROJECTS[currentProjectIndex].demoBroken ? (
-                      <iframe
-                        key={PROJECTS[currentProjectIndex].name}
-                        src={PROJECTS[currentProjectIndex].demo}
-                        title={PROJECTS[currentProjectIndex].name}
-                        frameBorder="0"
+      <motion.div
+          // initial={previousDeviceTransition.style}
+          animate={deviceTransition.style}
+          transition={{ duration: deviceTransition.duration }}
+          style={{
+            transformStyle: 'preserve-3d',
+            transitionProperty: 'all',
+          }}
+        >
+        <SDevice
+          width={DEVICE_DIMENSIONS.width}
+          height={DEVICE_DIMENSIONS.height}
+          depth={DEVICE_DIMENSIONS.depth}
+        >
+          {DEVICE_FACES.map((type: string) => (
+            <SDeviceFace
+              key={type}
+              type={type}
+              width={DEVICE_DIMENSIONS.width}
+              height={DEVICE_DIMENSIONS.height}
+              depth={DEVICE_DIMENSIONS.depth}
+              radius={DEVICE_DIMENSIONS.radius}
+            >
+              {type === 'front' && (
+                <>
+                  <Outline radius="1rem" />
+                  <SDeviceScreen>
+                    <Outline radius="0.5rem" />
+                    <SDeviceScreenContent>
+                      <Outline />
+                      <Fill />
+                      {deviceTransition?.type !== 'flip' ? (
+                        <iframe
+                          key={PROJECTS[currentProjectIndex].name}
+                          src={PROJECTS[currentProjectIndex].demo}
+                          title={PROJECTS[currentProjectIndex].name}
+                          frameBorder="0"
+                        />
+                      ) : null}
+                      <SDeviceScreenContentNoise
+                        visible={deviceTransition.type === 'flip'}
                       />
-                    ) : null}
-                    <SDeviceScreenContentNoise
-                      visible={PROJECTS[currentProjectIndex].demoBroken}
-                    />
-                  </SDeviceScreenContent>
-                  <SDeviceScreenButtons>
-                    <SDeviceScreenButton type="button" onClick={onPrevious}>
-                      <PrevIcon width={20} />
-                    </SDeviceScreenButton>
-                    <SDeviceScreenButton type="button" onClick={onExternalLink}>
-                      <ExternalLinkIcon width={16} />
-                    </SDeviceScreenButton>
-                    <Box s={{ opacity: 0, pointerEvents: 'none' }}>
-                      <SDeviceScreenButton type="button" onClick={onNext}>
-                        <NextIcon width={20} />
+                    </SDeviceScreenContent>
+                    <SDeviceScreenButtons>
+                      <SDeviceScreenButton type="button" onClick={onPrevious}>
+                        <PrevIcon width={20} />
                       </SDeviceScreenButton>
-                    </Box>
-                  </SDeviceScreenButtons>
-                  {/* <SDeviceScreenBack /> */}
-                </SDeviceScreen>
-              </>
-            )}
-          </SDeviceFace>
-        ))}
-        {DEVICE_CORNERS.map((type: string, cornerIndex: number) => (
-          <SDeviceCorner
-            key={type}
-            type={type}
-            width={cornerWidth}
-            radius={DEVICE_DIMENSIONS.radius}
-            depth={DEVICE_DIMENSIONS.depth}
-          >
-            {times(4, (cornerPieceIndex: number) => {
-              return (
-                <SDeviceCornerPiece
-                  key={cornerPieceIndex}
-                  {...cornerPieces[
-                    DEVICE_CORNERS.length * cornerIndex + cornerPieceIndex
-                  ]}
-                />
-              )
-            })}
-          </SDeviceCorner>
-        ))}
-      </SDevice>
+                      <SDeviceScreenButton type="button" onClick={onExternalLink}>
+                        <ExternalLinkIcon width={16} />
+                      </SDeviceScreenButton>
+                      <Box s={{ opacity: 0, pointerEvents: 'none' }}>
+                        <SDeviceScreenButton type="button" onClick={onNext}>
+                          <NextIcon width={20} />
+                        </SDeviceScreenButton>
+                      </Box>
+                    </SDeviceScreenButtons>
+                    {/* <SDeviceScreenBack /> */}
+                  </SDeviceScreen>
+                </>
+              )}
+            </SDeviceFace>
+          ))}
+          {DEVICE_CORNERS.map((type: string, cornerIndex: number) => (
+            <SDeviceCorner
+              key={type}
+              type={type}
+              width={cornerWidth}
+              radius={DEVICE_DIMENSIONS.radius}
+              depth={DEVICE_DIMENSIONS.depth}
+            >
+              {times(4, (cornerPieceIndex: number) => {
+                return (
+                  <SDeviceCornerPiece
+                    key={cornerPieceIndex}
+                    {...cornerPieces[
+                      DEVICE_CORNERS.length * cornerIndex + cornerPieceIndex
+                    ]}
+                  />
+                )
+              })}
+            </SDeviceCorner>
+          ))}
+        </SDevice>
+      </motion.div>
     </SDeviceWrapper>
   )
 }

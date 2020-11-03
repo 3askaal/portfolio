@@ -66,7 +66,7 @@ export const SLayoutNav = styled.div(({ theme, position }: any) => ({
   paddingBottom: '2rem',
 
   ...(position === 'left' && {
-    marginLeft: '2rem',
+    marginLeft: '1rem',
     marginTop: '1rem',
     alignItems: 'flex-start'
   }),

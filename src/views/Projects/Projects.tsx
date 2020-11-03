@@ -17,8 +17,6 @@ export const ProjectsView = () => {
         tag: location.hash.substring(1),
       })
 
-      console.log(locationProjectIndex)
-
       if (
         locationProjectIndex !== -1 &&
         locationProjectIndex !== currentProjectIndex

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
 import { ThemeProvider } from 'styled-components'
 import ReactGA from 'react-ga'
@@ -8,12 +8,9 @@ import { MiscProvider, MiscContext } from '../context'
 import { theme as localTheme, LocalGlobalStyle } from '../style'
 import { AnimationContainer } from './AnimationContainer'
 
+ReactGA.initialize('UA-119845723-1')
+
 export const App = () => {
-
-  useEffect(() => {
-    ReactGA.initialize('UA-119845723-1')
-  }, [])
-
   return (
     <BrowserRouter>
       <MiscProvider>

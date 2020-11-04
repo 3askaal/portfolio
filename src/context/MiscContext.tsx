@@ -12,7 +12,8 @@ export const MiscProvider = ({ children }: any) => {
   const [paperDimensions, setPaperDimensions] = useState({})
   const [currentPageIndex, setCurrentPageIndex] = useState(0)
   const [previousPageIndex, setPreviousPageIndex] = useState(0)
-  const [currentProjectIndex, setCurrentProjectIndex] = useState(0)
+  const [currentProjectIndex, setCurrentProjectIndexState] = useState(0)
+  const [previousProjectIndex, setPreviousProjectIndex] = useState(0)
   const [currentLayoutElement, setCurrentLayoutElement] = useState(null)
   const location = useLocation()
 
@@ -46,6 +47,11 @@ export const MiscProvider = ({ children }: any) => {
 
     setPaperDimensions(newPaperDimensions)
   }
+
+  const setCurrentProjectIndex = (newProjectIndex: number) => {
+    setPreviousProjectIndex(currentProjectIndex)
+    setCurrentProjectIndexState(newProjectIndex)
+  }
   
   useEffect(() => {
     setCurrentPageIndex(findIndex(PAGES, { path: location.pathname }))
@@ -76,7 +82,9 @@ export const MiscProvider = ({ children }: any) => {
         nextPage,
         previousPage,
         currentProjectIndex,
-        setCurrentProjectIndex
+        setCurrentProjectIndex,
+        previousProjectIndex,
+        setPreviousProjectIndex
       }}
     >
       <Redirect to={`${PAGES[currentPageIndex].path}${currentPageIndex > 0 ? `#${PROJECTS[currentProjectIndex].tag}` : ''}`} />

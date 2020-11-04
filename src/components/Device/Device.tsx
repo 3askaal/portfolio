@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react'
 import styled, { CSSObject, css, keyframes } from 'styled-components'
-import { times, random } from 'lodash'
+import { sample, times, random } from 'lodash'
 import { motion } from 'framer-motion'
 import { Box, rgba } from '3oilerplate'
 import { useHistory } from 'react-router-dom'
@@ -38,115 +38,6 @@ const SDevice = styled.div<any>(({ width, height }) => ({
   position: 'relative',
   width: `${width}rem`,
   height: `${height}rem`,
-}))
-
-const SDeviceScreen = styled.div<any>(({ theme }) => ({
-  position: 'relative',
-  display: 'flex',
-  flexDirection: 'column',
-  width: '100%',
-  height: '100%',
-  borderRadius: '0.25rem',
-
-  ...(!theme.isSketched && {
-    border: `1px solid ${rgba('white', 0.6)}`,
-    backgroundColor: rgba('black', 0.9),
-  }),
-}))
-
-const SDeviceScreenBack = styled.div<any>(({ theme }) => ({
-  position: 'absolute',
-  display: 'block',
-  top: 0,
-  left: 0,
-  right: 0,
-  bottom: 0,
-  backgroundColor: 'black',
-  transform: 'translateZ(-2px)',
-  pointerEvents: 'none',
-
-  ...(theme.isSketched && {
-    display: 'none'
-  }),
-}))
-
-const SDeviceScreenContent = styled.div<any>(({ theme }) => ({
-  position: 'relative',
-  display: 'flex',
-  flexGrow: 1,
-  overflow: 'hidden',
-  borderRadius: '0.25rem 0.25rem 0 0',
-  zIndex: 1,
-
-  iframe: {
-    width: '100%',
-    height: '100%',
-
-    ...(theme.isSketched && {
-      display: 'none',
-    }),
-  },
-}))
-
-const noise = keyframes`
-  0% { transform: translateX(0px,0px); }
-  10% { transform: translate(-100px, 100px); }
-  20% { transform: translate(150px, -100px); }
-  30% { transform: translate(-100px,100px); }
-  40% { transform: translate(100px, -150px); }
-  50% { transform: translate(-100px, 200px); }
-  60% { transform: translate(-200px, -100px); }
-  70% { transform: translateY(50px, 100px); }
-  80% { transform: translate(100px, -150px); }
-  90% { transform: translate(0px, 200px); }
-  100% { transform: translate(-100px, 100px); }
-`
-
-const SDeviceScreenContentNoise = styled.div<any>(
-  ({ visible }) => ({
-    position: 'absolute',
-    top: '-500px',
-    right: '-500px',
-    bottom: '-500px',
-    left: '-500px',
-    background: 'transparent url(https://www.dropbox.com/s/h7ab1c82ctzy83n/noise.png?raw=1) 0 0',
-    backgroundSize: '320px 320px',
-    opacity: 0.35,
-    display: 'none',
-
-    ...(visible && {
-      display: 'block',
-    }),
-  }),
-  css`
-    animation: ${noise} 1s steps(8, end) infinite both;
-  `,
-)
-
-const SDeviceScreenButtons = styled.div<any>(
-  ({ theme }) => ({
-    position: 'relative',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-    padding: '0.5rem',
-    height: '2rem',
-    width: '100%',
-    zIndex: 1,
-  }),
-  ({ theme }) =>
-    theme.isSketched &&
-    css`
-      opacity: 0;
-      animation: ${fadeIn} 0.5s ease-in-out 2s forwards;
-    `,
-)
-
-const SDeviceScreenButton = styled.button<any>(({ disabled }) => ({
-  ...(disabled && {
-    opacity: 0.25,
-    pointerEvents: 'none',
-  }),
 }))
 
 const SDeviceFace = styled.div<any>(
@@ -261,9 +152,120 @@ const SDeviceCornerPiece = styled.div<any>(
   }),
 )
 
-export const Device = ({ currentProjectIndex }: any) => {
+const SDeviceScreen = styled.div<any>(({ theme }) => ({
+  position: 'relative',
+  display: 'flex',
+  flexDirection: 'column',
+  width: '100%',
+  height: '100%',
+  borderRadius: '0.25rem',
+
+  ...(!theme.isSketched && {
+    border: `1px solid ${rgba('white', 0.6)}`,
+    backgroundColor: rgba('black', 0.9),
+  }),
+}))
+
+const SDeviceScreenBack = styled.div<any>(({ theme }) => ({
+  position: 'absolute',
+  display: 'block',
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  backgroundColor: 'black',
+  transform: 'translateZ(-2px)',
+  pointerEvents: 'none',
+
+  ...(theme.isSketched && {
+    display: 'none'
+  }),
+}))
+
+const SDeviceScreenContent = styled.div<any>(({ theme }) => ({
+  position: 'relative',
+  display: 'flex',
+  flexGrow: 1,
+  overflow: 'hidden',
+  borderRadius: '0.25rem 0.25rem 0 0',
+  transform: 'translateZ(1px)',
+  zIndex: 1,
+
+  iframe: {
+    width: '100%',
+    height: '100%',
+
+    ...(theme.isSketched && {
+      display: 'none',
+    }),
+  },
+}))
+
+const noise = keyframes`
+  0% { transform: translateX(0px,0px); }
+  10% { transform: translate(-100px, 100px); }
+  20% { transform: translate(150px, -100px); }
+  30% { transform: translate(-100px,100px); }
+  40% { transform: translate(100px, -150px); }
+  50% { transform: translate(-100px, 200px); }
+  60% { transform: translate(-200px, -100px); }
+  70% { transform: translateY(50px, 100px); }
+  80% { transform: translate(100px, -150px); }
+  90% { transform: translate(0px, 200px); }
+  100% { transform: translate(-100px, 100px); }
+`
+
+const SDeviceScreenContentNoise = styled.div<any>(
+  ({ visible }) => ({
+    position: 'absolute',
+    top: '-500px',
+    right: '-500px',
+    bottom: '-500px',
+    left: '-500px',
+    background: 'transparent url(https://www.dropbox.com/s/h7ab1c82ctzy83n/noise.png?raw=1) 0 0',
+    backgroundSize: '320px 320px',
+    opacity: 0.35,
+    display: 'block',
+    visibility: 'hidden',
+
+    ...(visible && {
+      visibility: 'visible'
+    }),
+  }),
+  css`
+    animation: ${noise} 1s steps(8, end) infinite both;
+  `,
+)
+
+const SDeviceScreenButtons = styled.div<any>(
+  ({ theme }) => ({
+    position: 'relative',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    padding: '0.5rem',
+    height: '2rem',
+    width: '100%',
+    zIndex: 1,
+  }),
+  ({ theme }) =>
+    theme.isSketched &&
+    css`
+      opacity: 0;
+      animation: ${fadeIn} 0.5s ease-in-out 2s forwards;
+    `,
+)
+
+const SDeviceScreenButton = styled.button<any>(({ disabled }) => ({
+  ...(disabled && {
+    opacity: 0.25,
+    pointerEvents: 'none',
+  }),
+}))
+
+export const Device = () => {
   const history: any = useHistory()
-  const { isSketched }: any = useContext<any>(MiscContext)
+  const { isSketched, currentProjectIndex, previousProjectIndex }: any = useContext<any>(MiscContext)
   const [cornerPieces, setCornerPieces]: any = useState<any>([])
   const [previousDeviceTransition, setPreviousDeviceTransition]: any = useState<any>({})
   const [deviceTransition, setDeviceTransition]: any = useState<any>({})
@@ -275,7 +277,6 @@ export const Device = ({ currentProjectIndex }: any) => {
   }, [])
 
   const tilt = (direction: string): void => {
-
     let rotateY = currentProjectIndex * 360
 
     if (direction === 'left') rotateY -= random(5, 15)
@@ -291,12 +292,17 @@ export const Device = ({ currentProjectIndex }: any) => {
   }
 
   const flip = (): void => {
+    const direction = currentProjectIndex > previousProjectIndex ? 'right' : 'left'
+    let rotateY = currentProjectIndex * 360
+
+    if (direction === 'left') rotateY -= random(5, 10)
+    if (direction === 'right') rotateY += random(5, 10)
+
     setPreviousDeviceTransition(deviceTransition)
     setDeviceTransition({
       type: 'flip',
-      style: {
-        rotateY: currentProjectIndex * 360 + random(-5, 5),
-      },
+      direction,
+      style: { rotateY },
       duration: 1,
     })
   }
@@ -325,36 +331,34 @@ export const Device = ({ currentProjectIndex }: any) => {
     })
   }
 
-  function startTilt() {
-    tilt('right')
-
-    setDeviceTransitionInterval(
-      setInterval(() => {
-        if (deviceTransition.direction === 'left') tilt('right')
-        if (deviceTransition.direction === 'right') tilt('left')
-      }, 4000)
-    )
-  }
+  useEffect(() => {
+    tilt(sample(['left', 'right']) as string)
+  }, [])
 
   useEffect(() => {
-    if (deviceTransitionInterval) {
-      clearInterval(deviceTransitionInterval)
-      setDeviceTransitionInterval(null)
-    }
-
     if (!isSketched) {
+      if (deviceTransitionInterval) {
+        clearTimeout(deviceTransitionInterval)
+      }
+
       flip()
+    } else {
+      setDeviceTransition({
+        type: 'off',
+        style: { rotateY: 0 },
+        duration: 0,
+      })
+
+      if (deviceTransitionInterval) {
+        clearTimeout(deviceTransitionInterval)
+      }
     }
-  }, [currentProjectIndex])
+  }, [isSketched, currentProjectIndex, previousProjectIndex])
 
   useEffect(() => {
-    if (!isSketched && deviceTransition.type === 'flip') {
-      setTimeout(startTilt, deviceTransition.duration * 1000)
-    }
-
-    return () => {
-      clearInterval(deviceTransitionInterval)
-      setDeviceTransitionInterval(null)
+    if (!isSketched && deviceTransition.type !== 'off') {
+      const tiltInDirection = () => tilt(deviceTransition.direction === 'right' ? 'left' : 'right')
+      setDeviceTransitionInterval(setTimeout(tiltInDirection, deviceTransition.duration * 1000))
     }
   }, [deviceTransition])
 

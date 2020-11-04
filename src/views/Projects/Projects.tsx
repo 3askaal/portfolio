@@ -41,13 +41,10 @@ export const ProjectsView = () => {
         }}
       >
         <Col s={{ flexShrink: 0, flexGrow: 1 }}>
-          <ProjectPreview
-            currentProjectIndex={currentProjectIndex}
-            setCurrentProjectIndex={setCurrentProjectIndex}
-          />
+          <ProjectPreview />
         </Col>
         <Col s={{ flexShrink: 1, paddingTop: ['2rem', null, '4rem'] }}>
-          <ProjectDescription currentProjectIndex={currentProjectIndex} />
+          <ProjectDescription />
         </Col>
       </Row>
     </Layout>

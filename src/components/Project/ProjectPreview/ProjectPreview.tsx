@@ -1,14 +1,13 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { ArrowLeft as PrevIcon, ArrowRight as NextIcon } from 'react-feather'
 import { Spacer } from '3oilerplate'
 import ReactGA from 'react-ga'
-import { Button, Text, Space, Link, Body, Device } from '../..'
+import { Button, Text, Space, Device } from '../..'
 import { PROJECTS } from '../../../constants'
+import { MiscContext } from '../../../context'
 
-export const ProjectPreview = ({
-  currentProjectIndex,
-  setCurrentProjectIndex,
-}: any) => {
+export const ProjectPreview = () => {
+  const { currentProjectIndex, setCurrentProjectIndex }: any = useContext(MiscContext)
   const [isNavigating, setIsNavigating]: any = useState<any>(false)
 
   function onNext() {
@@ -40,7 +39,7 @@ export const ProjectPreview = ({
   return (
     <>
       <Space blocks={3} />
-      <Device currentProjectIndex={currentProjectIndex} />
+      <Device />
       <Space blocks={2} />
       <Spacer
         size="s"

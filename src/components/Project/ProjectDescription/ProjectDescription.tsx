@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import {
   Code as CodeIcon,
   ExternalLink as ExternalLinkIcon,
@@ -8,8 +8,11 @@ import { startCase } from 'lodash'
 import { Title, Spacer, Box } from '3oilerplate'
 import { Text, Space, Label, Link, Body } from '../..'
 import { PROJECTS } from '../../../constants'
+import { MiscContext } from '../../../context'
 
-export const ProjectDescription = ({ currentProjectIndex }: any) => {
+export const ProjectDescription = () => {
+  const { currentProjectIndex }: any = useContext(MiscContext)
+
   function onDemoLinkClick(url: string) {
     ReactGA.event({
       category: 'Projects',

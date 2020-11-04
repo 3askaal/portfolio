@@ -27,13 +27,13 @@ export const SSwitchToggle = styled.div<any>(({ theme }) => ({
   height: '100%',
   display: 'inline-block',
   borderRadius: '2px',
-  transform: 'translateX(0%)',
+  transform: 'translateX(100%)',
   backgroundColor: rgba(theme.colors.primary, 0.75),
   transition: theme.transition,
 
   ...(theme.isSketched && {
     backgroundColor: theme.colors.sketch.paperWhite,
-    transform: 'translateX(107%)',
+    transform: 'translateX(5%)',
   }),
 }))
 

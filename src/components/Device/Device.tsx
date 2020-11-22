@@ -268,7 +268,7 @@ export const Device = () => {
   const { isSketched, currentProjectIndex, previousProjectIndex }: any = useContext<any>(MiscContext)
   const [cornerPieces, setCornerPieces]: any = useState<any>([])
   const [previousDeviceTransition, setPreviousDeviceTransition]: any = useState<any>({})
-  const [deviceTransition, setDeviceTransition]: any = useState<any>({})
+  const [deviceTransition, setDeviceTransition]: any = useState<any>(null)
   const [deviceTransitionInterval, setDeviceTransitionInterval]: any = useState<any>(null)
   const cornerWidth = calcCornerWidth()
 
@@ -305,6 +305,10 @@ export const Device = () => {
       style: { rotateY },
       duration: 1,
     })
+  }
+
+  const reset = (): void => {
+    setDeviceTransition({})
   }
 
   function onNext() {
@@ -365,7 +369,7 @@ export const Device = () => {
   return (
     <SDeviceWrapper>
       <motion.div
-          {...(!isSketched && {
+          {...(deviceTransition && {
             animate: deviceTransition.style,
             transition: { duration: deviceTransition.duration },
             style: {
@@ -405,7 +409,7 @@ export const Device = () => {
                         />
                       ) : null}
                       <SDeviceScreenContentNoise
-                        visible={deviceTransition.type === 'flip'}
+                        visible={deviceTransition?.type === 'flip'}
                       />
                     </SDeviceScreenContent>
                     <SDeviceScreenButtons>

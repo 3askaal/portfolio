@@ -31,7 +31,6 @@ export const SLayoutHoles = styled.div(({ theme }: any) =>
     top: 0,
     left: 0,
     bottom: 0,
-    // overflow: 'hidden',
     paddingLeft: '0.11rem',
     paddingTop: '0.12rem',
     opacity: 1,
@@ -58,7 +57,7 @@ export const SLayoutNav = styled.div(({ theme, position }: any) => ({
   position: 'absolute',
   display: 'flex',
   alignItems: ['flex-end', null, 'center'],
-  [position]: 0,
+  [`${position}`]: 0,
   top: 0,
   bottom: 0,
   zIndex: 1,
@@ -76,7 +75,7 @@ export const SLayoutContent = styled.div(({ maxWidth }: any) =>
   ({
     position: 'relative',
     width: '100%',
-    maxWidth: maxWidth || '23rem',
+    maxWidth: maxWidth || '22rem',
     paddingTop: ['1rem', '2rem'],
     paddingBottom: '3rem',
     paddingRight: '1rem'
@@ -97,6 +96,7 @@ export const Layout = ({ children, maxWidth, button, pageIndex, hasHoles, ...pro
 
   const containerRef: Ref<any> = useRef()
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [contentWidth, setContentWidth] = useState<string>('')
 
   function onSwitchClick() {
     ReactGA.event({
@@ -117,6 +117,10 @@ export const Layout = ({ children, maxWidth, button, pageIndex, hasHoles, ...pro
 
   useEffect(() => {
     setIsLoading(false)
+
+    if (layoutDimensions.amountBlocks) {
+      setContentWidth(layoutDimensions.amountBlocks % 2 === 0 ? '22rem' : '23rem')
+    }
   }, [layoutDimensions])
 
   return (
@@ -149,8 +153,7 @@ export const Layout = ({ children, maxWidth, button, pageIndex, hasHoles, ...pro
         <SLayoutContent
           s={{
             paddingLeft: hasHoles ? ['3rem'] : ['2rem', '2rem'],
-            // paddingRight: hasHoles ? ['2rem'] : ['0', '2rem'],
-            maxWidth
+            maxWidth: contentWidth
           }}
           ref={containerRef}
         >{children}</SLayoutContent>

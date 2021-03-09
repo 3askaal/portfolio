@@ -29,7 +29,7 @@ export const HomeView = () => {
         <p>
           Besides building things I like{' '}
           <a
-            href="https://www.thrashermagazine.com/articles/videos/dime-s-knowing-mixtape-vol-2/"
+            href="https://www.youtube.com/watch?v=ZYAzo5OdqHM#t=11m6s"
             target="_blank"
             rel="noreferrer"
           >

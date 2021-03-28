@@ -20,6 +20,7 @@ import {
 import { calcCornerPieces, calcCornerWidth } from '../../helpers'
 import { MiscContext } from '../../context'
 import { fadeIn } from '../../style'
+import { Body } from '../Body/Body'
 
 const SDeviceWrapper = styled.div<any>(
   ({ theme }) =>
@@ -186,10 +187,22 @@ const SDeviceScreenContent = styled.div<any>(({ theme }) => ({
   position: 'relative',
   display: 'flex',
   flexGrow: 1,
+  alignItems: 'flex-end',
   overflow: 'hidden',
   borderRadius: '0.25rem 0.25rem 0 0',
   transform: 'translateZ(1px)',
   zIndex: 1,
+  textAlign: 'center',
+
+  ...(theme.isSketched && {
+    padding: '1rem',
+  }),
+
+  ...(!theme.isSketched && {
+    p: {
+      display: 'none',
+    }
+  }),
 
   iframe: {
     width: '100%',
@@ -408,6 +421,9 @@ export const Device = () => {
                           frameBorder="0"
                         />
                       ) : null}
+                      <Body>
+                        <p>Please switch off sketch mode<br />to see projects in full effect.</p>
+                      </Body>
                       <SDeviceScreenContentNoise
                         visible={deviceTransition?.type === 'flip'}
                       />

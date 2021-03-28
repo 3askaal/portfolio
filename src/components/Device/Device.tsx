@@ -190,7 +190,7 @@ const SDeviceScreenContent = styled.div<any>(({ theme }) => ({
   alignItems: 'flex-end',
   overflow: 'hidden',
   borderRadius: '0.25rem 0.25rem 0 0',
-  transform: 'translateZ(1px)',
+  transform: 'translateZ(2px)',
   zIndex: 1,
   textAlign: 'center',
 

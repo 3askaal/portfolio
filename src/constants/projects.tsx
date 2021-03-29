@@ -20,15 +20,7 @@ export const PROJECTS: any = [
         </p>
         <p>
           This app gives you random tricks based on a difficulty level you can
-          pick. The idea is based on The Berrics's{' '}
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://www.youtube.com/watch?v=zMad6sMxzko"
-          >
-            Skate Or Dice
-          </a>
-          .
+          pick.
         </p>
       </>
     ),

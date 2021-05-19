@@ -280,7 +280,6 @@ export const Device = () => {
   const history: any = useHistory()
   const { isSketched, currentProjectIndex, previousProjectIndex }: any = useContext<any>(MiscContext)
   const [cornerPieces, setCornerPieces]: any = useState<any>([])
-  const [previousDeviceTransition, setPreviousDeviceTransition]: any = useState<any>({})
   const [deviceTransition, setDeviceTransition]: any = useState<any>(null)
   const [deviceTransitionInterval, setDeviceTransitionInterval]: any = useState<any>(null)
   const cornerWidth = calcCornerWidth()
@@ -295,7 +294,6 @@ export const Device = () => {
     if (direction === 'left') rotateY -= random(5, 15)
     if (direction === 'right') rotateY += random(5, 15)
 
-    setPreviousDeviceTransition(deviceTransition)
     setDeviceTransition({
       type: 'tilt',
       direction,
@@ -311,17 +309,12 @@ export const Device = () => {
     if (direction === 'left') rotateY -= random(5, 10)
     if (direction === 'right') rotateY += random(5, 10)
 
-    setPreviousDeviceTransition(deviceTransition)
     setDeviceTransition({
       type: 'flip',
       direction,
       style: { rotateY },
       duration: 1,
     })
-  }
-
-  const reset = (): void => {
-    setDeviceTransition({})
   }
 
   function onNext() {
